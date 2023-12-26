@@ -2,9 +2,9 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\BranchResource\Pages;
-use App\Filament\Resources\BranchResource\RelationManagers;
-use App\Models\Branch;
+use App\Filament\Resources\UserResource\Pages;
+use App\Filament\Resources\UserResource\RelationManagers;
+use App\Models\User;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -13,11 +13,11 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class BranchResource extends Resource
+class UserResource extends Resource
 {
-    protected static ?string $model = Branch::class;
+    protected static ?string $model = User::class;
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
-    protected static ?int $navigationSort = 1;
+    protected static ?int $navigationSort = 0;
 
     public static function form(Form $form): Form
     {
@@ -27,16 +27,17 @@ class BranchResource extends Resource
                     ->autofocus()
                     ->required()
                     ->maxLength(255)
-                    ->unique(Branch::class, 'name')
-                    ->placeholder('Branch Name'),
-                Forms\Components\TextInput::make('location')
+                    ->unique(User::class, 'name')
+                    ->placeholder('User Name'),
+                Forms\Components\TextInput::make('email')
                     ->required()
-                    ->maxLength(255)
-                    ->placeholder('Branch Location'),
-                Forms\Components\Select::make('user_id')
-                    ->relationship('user', 'name')
-                    ->placeholder('Select User')
-                    ->required(),
+                    ->email()
+                    ->unique(User::class, 'email')
+                    ->placeholder('User Email'),
+                Forms\Components\TextInput::make('password')
+                    ->required()
+                    ->password()
+                    ->placeholder('User Password'),
             ]);
     }
 
@@ -47,10 +48,7 @@ class BranchResource extends Resource
                 Tables\Columns\TextColumn::make('name')
                     ->searchable()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('location')
-                    ->searchable()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('user.name')
+                Tables\Columns\TextColumn::make('email')
                     ->searchable()
                     ->sortable(),
             ])
@@ -77,9 +75,9 @@ class BranchResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListBranches::route('/'),
-            'create' => Pages\CreateBranch::route('/create'),
-            'edit' => Pages\EditBranch::route('/{record}/edit'),
+            'index' => Pages\ListUsers::route('/'),
+            'create' => Pages\CreateUser::route('/create'),
+            'edit' => Pages\EditUser::route('/{record}/edit'),
         ];
     }
 }
