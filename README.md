@@ -26,3 +26,5 @@ To change labels and pluralLabel add these to {Model}Resource.php (e.g. UserReso
     }
 
     __('key') means find the value from chosen lang json using the key, if you didn't find it just return the key as a value.
+
+if you want to change the default language go to "config/app.php" in line 99, i have added two languages ar and en.
