@@ -18,9 +18,12 @@ class BranchItemsRelationManager extends RelationManager
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('id')
+                Forms\Components\TextInput::make('quantity')
                     ->required()
-                    ->maxLength(255),
+                    ->type('number')
+                    ->minValue(0)
+                    ->maxValue(999999999)
+                    ->placeholder('Item Quantity'),
             ]);
     }
 
@@ -30,6 +33,15 @@ class BranchItemsRelationManager extends RelationManager
             ->recordTitleAttribute('id')
             ->columns([
                 Tables\Columns\TextColumn::make('id'),
+                Tables\Columns\TextColumn::make('item.name')
+                    ->searchable()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('item.unit')
+                    ->searchable()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('quantity')
+                    ->searchable()
+                    ->sortable(),
             ])
             ->filters([
                 //

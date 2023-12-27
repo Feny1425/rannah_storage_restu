@@ -23,11 +23,4 @@ class Item extends Model
             }
         });
     }
-
-    protected function name_unit(): Attribute
-    {
-        return Attribute::make(
-            get: fn () => $this->name . ' (' . $this->unit . ')',
-        );
-    }
 }
