@@ -16,6 +16,7 @@ return new class extends Migration
             $table->timestamps();
             $table->string("name");
             $table->string("unit");
+            $table->unique(["name", "unit"]);
             $table->enum("type", ["food", "supplies"]);
         });
     }

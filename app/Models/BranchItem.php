@@ -15,7 +15,7 @@ class BranchItem extends Model
         return $this->belongsTo(Branch::class);
     }
 
-    public function item(): BelongsTo
+    public function branch_items(): BelongsTo
     {
         return $this->belongsTo(Item::class);
     }

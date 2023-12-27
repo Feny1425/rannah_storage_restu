@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Branch extends Model
 {
@@ -15,9 +16,9 @@ class Branch extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function branchItems(): BelongsTo
+    public function branch_items(): HasMany
     {
-        return $this->belongsTo(BranchItem::class);
+        return $this->hasMany(BranchItem::class);
     }
 
     protected static function booted()

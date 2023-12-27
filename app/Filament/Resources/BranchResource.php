@@ -34,6 +34,7 @@ class BranchResource extends Resource
                     ->maxLength(255)
                     ->placeholder('Branch Location'),
                 Forms\Components\Select::make('user_id')
+                    ->label('Branch Manager')
                     ->relationship('user', 'name')
                     ->placeholder('Select User')
                     ->required(),
@@ -70,7 +71,7 @@ class BranchResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            RelationManagers\BranchItemsRelationManager::class,
         ];
     }
 
