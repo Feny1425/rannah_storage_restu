@@ -18,25 +18,24 @@ class BranchResource extends Resource
     protected static ?string $model = Branch::class;
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
     protected static ?int $navigationSort = 1;
-
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('name')
+                Forms\Components\TextInput::make(__('name'))
                     ->autofocus()
                     ->required()
                     ->maxLength(255)
                     ->unique(Branch::class, 'name')
-                    ->placeholder('Branch Name'),
-                Forms\Components\TextInput::make('location')
+                    ->placeholder(__('Branch Name')),
+                Forms\Components\TextInput::make(__('location'))
                     ->required()
                     ->maxLength(255)
-                    ->placeholder('Branch Location'),
+                    ->placeholder(__('Branch Location')),
                 Forms\Components\Select::make('user_id')
-                    ->label('Branch Manager')
+                    ->label(__('Branch Manager'))
                     ->relationship('user', 'name')
-                    ->placeholder('Select User')
+                    ->placeholder(__('Select User'))
                     ->required(),
             ]);
     }
@@ -47,13 +46,16 @@ class BranchResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('name')
                     ->searchable()
-                    ->sortable(),
+                    ->sortable()
+                    ->label(__('Name')),
                 Tables\Columns\TextColumn::make('location')
                     ->searchable()
-                    ->sortable(),
+                    ->sortable()
+                    ->label(__('Location')),
                 Tables\Columns\TextColumn::make('user.name')
                     ->searchable()
-                    ->sortable(),
+                    ->sortable()
+                    ->label(__('User')),
             ])
             ->filters([
                 //
@@ -82,5 +84,15 @@ class BranchResource extends Resource
             'create' => Pages\CreateBranch::route('/create'),
             'edit' => Pages\EditBranch::route('/{record}/edit'),
         ];
+    }
+
+    
+    public static function getLabel(): string
+    {
+        return __('Branch');
+    }
+    public static function getpluralLabel(): string
+    {
+        return __('Branches');
     }
 }

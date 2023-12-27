@@ -24,19 +24,19 @@ class ItemResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('name')
+                Forms\Components\TextInput::make(__('name'))
                     ->required()
                     ->maxLength(255)
-                    ->placeholder('Item Name'),
+                    ->placeholder(__('Item Name')),
                 Forms\Components\TextInput::make('unit')
                     ->required()
                     ->maxLength(255)
-                    ->placeholder('Item Unit'),
+                    ->placeholder(__('Item Unit')),
                 Forms\Components\Select::make('type')
                     ->required()
                     ->options([
-                        'food' => 'Food',
-                        'supplies' => 'Supplies',
+                        'food' => __('Food'),
+                        'supplies' => __('Supplies'),
                     ])
                     ->placeholder('Item Type'),
             ]);
@@ -55,11 +55,15 @@ class ItemResource extends Resource
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('name')
-                    ->searchable(),
+                    ->searchable()
+                    ->label(__('Name')),
                 Tables\Columns\TextColumn::make('unit')
-                    ->searchable(),
+                    ->searchable()
+                    ->label(__('Unit')),
                 Tables\Columns\TextColumn::make('type')
-                    ->searchable(),
+                    ->searchable()
+                    ->label(__('Type')),
+
             ])
             ->filters([
                 //
@@ -88,5 +92,14 @@ class ItemResource extends Resource
             'create' => Pages\CreateItem::route('/create'),
             'edit' => Pages\EditItem::route('/{record}/edit'),
         ];
+    }
+    
+    public static function getLabel(): string
+    {
+        return __('Item');
+    }
+    public static function getpluralLabel(): string
+    {
+        return __('Items');
     }
 }

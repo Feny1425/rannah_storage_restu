@@ -1,0 +1,30 @@
+{
+    "User Name": "اسم المستخدم",
+    "User Password": "كلمة المرور",
+    "User": "مستخدم",
+    "Users": "المستخدمين",
+    "Select User": "اختر احد المستخدمين",
+
+
+    "Name": "الاسم",
+    "Email": "البريد الالكتروني",
+    "Location": "الموقع",
+    "Unit": "الوحدة",
+    "Type": "النوع",
+
+
+    "Branch Location": "موقع الفرع",
+    "Branches": "الفروع",
+    "Branch": "فرع",
+    "Branch Name": "اسم الفرع",
+    "Branch Manager": "مالك الفرع",
+
+    "Item": "عنصر",
+    "Items": "عناصر",
+    "Item Name": "اسم العنصر",
+    "Item Unit": "وحدة العنصر",
+    "Food": "غذاء",
+    "Supplies": "أداة"
+
+    
+}

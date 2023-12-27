@@ -23,21 +23,22 @@ class UserResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('name')
+                Forms\Components\TextInput::make(__('name'))
                     ->autofocus()
                     ->required()
                     ->maxLength(255)
                     ->unique(User::class, 'name')
-                    ->placeholder('User Name'),
+                    ->placeholder(__('User Name')),
                 Forms\Components\TextInput::make('email')
+                    ->label(__('Email'))
                     ->required()
                     ->email()
                     ->unique(User::class, 'email')
-                    ->placeholder('User Email'),
+                    ->placeholder(__('Email')),
                 Forms\Components\TextInput::make('password')
                     ->required()
                     ->password()
-                    ->placeholder('User Password'),
+                    ->placeholder(__('User Password')),
             ]);
     }
 
@@ -47,10 +48,12 @@ class UserResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('name')
                     ->searchable()
-                    ->sortable(),
+                    ->sortable()
+                    ->label(__('Name')),
                 Tables\Columns\TextColumn::make('email')
                     ->searchable()
-                    ->sortable(),
+                    ->sortable()
+                    ->label(__('Email')),
             ])
             ->filters([
                 //
@@ -79,5 +82,14 @@ class UserResource extends Resource
             'create' => Pages\CreateUser::route('/create'),
             'edit' => Pages\EditUser::route('/{record}/edit'),
         ];
+    }
+    
+    public static function getLabel(): string
+    {
+        return __('User');
+    }
+    public static function getpluralLabel(): string
+    {
+        return __('Users');
     }
 }
