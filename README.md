@@ -18,11 +18,11 @@ To change labels and pluralLabel add these to {Model}Resource.php (e.g. UserReso
 
     public static function getLabel(): string
     {
-        return __('Label'); //Change Label with the right key
+        return __('Key'); //Change Key with the right key
     }
     public static function getpluralLabel(): string
     {
-        return __('Labels'); // Change Labels with the right key
+        return __('Keys'); // Change Keys with the right key
     }
 
     __('key') means find the value from chosen lang json using the key, if you didn't find it just return the key as a value.
