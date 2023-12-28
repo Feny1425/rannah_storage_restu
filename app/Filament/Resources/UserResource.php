@@ -23,12 +23,13 @@ class UserResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make(__('name'))
+                Forms\Components\TextInput::make('name')
                     ->autofocus()
                     ->required()
                     ->maxLength(255)
                     ->unique(User::class, 'name')
-                    ->placeholder(__('User Name')),
+                    ->placeholder(__('User Name'))
+                    ->label(__('Name')),
                 Forms\Components\TextInput::make('email')
                     ->label(__('Email'))
                     ->required()
@@ -38,7 +39,8 @@ class UserResource extends Resource
                 Forms\Components\TextInput::make('password')
                     ->required()
                     ->password()
-                    ->placeholder(__('User Password')),
+                    ->placeholder(__('User Password'))
+                    ->label(__('Password')),
             ]);
     }
 

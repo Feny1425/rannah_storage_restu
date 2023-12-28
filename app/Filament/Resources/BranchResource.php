@@ -22,16 +22,18 @@ class BranchResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make(__('name'))
+                Forms\Components\TextInput::make('name')
                     ->autofocus()
                     ->required()
                     ->maxLength(255)
                     ->unique(Branch::class, 'name')
-                    ->placeholder(__('Branch Name')),
-                Forms\Components\TextInput::make(__('location'))
+                    ->placeholder(__('Branch Name'))
+                    ->label(__('Name')),
+                Forms\Components\TextInput::make('location')
                     ->required()
                     ->maxLength(255)
-                    ->placeholder(__('Branch Location')),
+                    ->placeholder(__('Branch Location'))
+                    ->label(__('Location')),
                 Forms\Components\Select::make('user_id')
                     ->label(__('Branch Manager'))
                     ->relationship('user', 'name')
@@ -68,7 +70,7 @@ class BranchResource extends Resource
                 ->openUrlInNewTab(),
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
+                    Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ]);

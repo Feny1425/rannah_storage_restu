@@ -1,3 +1,4 @@
+
 {
     "User Name": "اسم المستخدم",
     "User Password": "كلمة المرور",
@@ -8,9 +9,11 @@
 
     "Name": "الاسم",
     "Email": "البريد الالكتروني",
+    "Password": "كلمة المرور",
     "Location": "الموقع",
     "Unit": "الوحدة",
     "Type": "النوع",
+    "Quantity": "الكمية",
 
 
     "Branch Location": "موقع الفرع",
@@ -19,12 +22,17 @@
     "Branch Name": "اسم الفرع",
     "Branch Manager": "مالك الفرع",
 
+    "Item Quantity": "العدد الموجود في المخزن",
+    "Branch Item": "عنصر في الفرع",
+    "Branch Items": "العناصر الموجودة في الفرع",
+
     "Item": "عنصر",
     "Items": "عناصر",
     "Item Name": "اسم العنصر",
     "Item Unit": "وحدة العنصر",
     "Food": "غذاء",
-    "Supplies": "أداة"
+    "Supplies": "أداة",
+    "Item Type":"نوع العنصر"
 
     
 }

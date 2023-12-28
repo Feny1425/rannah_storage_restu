@@ -23,7 +23,7 @@ class BranchItemsRelationManager extends RelationManager
                     ->type('number')
                     ->minValue(0)
                     ->maxValue(999999999)
-                    ->placeholder('Item Quantity'),
+                    ->placeholder(__('Item Quantity')),
             ]);
     }
 
@@ -34,12 +34,15 @@ class BranchItemsRelationManager extends RelationManager
             ->columns([
                 Tables\Columns\TextColumn::make('id'),
                 Tables\Columns\TextColumn::make('item.name')
+                    ->label(__('Name'))
                     ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('item.unit')
+                    ->label(__('Unit'))
                     ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('quantity')
+                    ->label(__('Quantity'))
                     ->searchable()
                     ->sortable(),
             ])
@@ -55,11 +58,20 @@ class BranchItemsRelationManager extends RelationManager
                 ]),
             ]);
     }
+<<<<<<< HEAD
     public static function getModelLabel(): string
     {
         return __('Branch Item');
     }
     public static function getModelpluralLabel(): string
+=======
+    
+    public static function getLabel(): string
+    {
+        return __('Branch Item');
+    }
+    public static function getpluralLabel(): string
+>>>>>>> bc74953e3db6959d3897888b372d3e20f4a72239
     {
         return __('Branch Items');
     }
