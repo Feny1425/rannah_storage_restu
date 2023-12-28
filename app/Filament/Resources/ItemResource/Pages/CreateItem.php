@@ -2,11 +2,11 @@
 
 namespace App\Filament\Resources\ItemResource\Pages;
 
-use App\Filament\Resources\BranchItemResource;
+use App\Filament\Resources\BranchResource;
 use Filament\Actions;
 use Filament\Resources\Pages\CreateRecord;
 
 class CreateItem extends CreateRecord
 {
-    protected static string $resource = BranchItemResource::class;
+    protected static string $resource = BranchResource::class;
 }
