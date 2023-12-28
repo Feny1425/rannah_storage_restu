@@ -58,20 +58,12 @@ class BranchItemsRelationManager extends RelationManager
                 ]),
             ]);
     }
-<<<<<<< HEAD
-    public static function getModelLabel(): string
-    {
-        return __('Branch Item');
-    }
-    public static function getModelpluralLabel(): string
-=======
     
     public static function getLabel(): string
     {
         return __('Branch Item');
     }
     public static function getpluralLabel(): string
->>>>>>> bc74953e3db6959d3897888b372d3e20f4a72239
     {
         return __('Branch Items');
     }
