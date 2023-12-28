@@ -70,7 +70,7 @@ class ItemResource extends Resource
                 Tables\Columns\TextColumn::make(__('nameEN'))
                     ->searchable()
                     ->label(__('Name')),
-                Tables\Columns\TextColumn::make('unit')
+                Tables\Columns\TextColumn::make(__('unitEN'))
                     ->searchable()
                     ->label(__('Unit')),
                 Tables\Columns\TextColumn::make('type')

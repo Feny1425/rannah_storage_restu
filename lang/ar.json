@@ -15,6 +15,7 @@
     "Type": "النوع",
     "Quantity": "الكمية",
     "nameEN": "name", 
+    "unitEN": "unit",
 
 
     "Branch Location": "موقع الفرع",
@@ -32,7 +33,9 @@
     "Item Name": "اسم العنصر",
     "Item Unit": "وحدة العنصر",
     "Food": "غذاء",
+    "food": "غذاء",
     "Supplies": "أداة",
+    "supplies": "أداة",
     "Item Type":"نوع العنصر"
 
     
