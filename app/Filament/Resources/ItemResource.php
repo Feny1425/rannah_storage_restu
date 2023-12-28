@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use App\Enums\Food;
 use App\Filament\Resources\ItemResource\Pages;
 use App\Filament\Resources\ItemResource\RelationManagers;
 use App\Models\Item;
@@ -46,10 +47,7 @@ class ItemResource extends Resource
                         ->label('Unit'),
                 Forms\Components\Select::make('type')
                     ->required()
-                    ->options([
-                        'food' => __('Food'),
-                        'supplies' => __('Supplies'),
-                    ])
+                    ->options(Food::class)
                     ->placeholder(__('Item Type'))
                     ->label(__('Type')),
             ]);
@@ -75,8 +73,8 @@ class ItemResource extends Resource
                     ->label(__('Unit')),
                 Tables\Columns\TextColumn::make('type')
                     ->searchable()
-                    ->label(__('Type')),
-
+                    ->label(__('Type'))
+                    ->badge('')
             ])
             ->filters([
                 //
