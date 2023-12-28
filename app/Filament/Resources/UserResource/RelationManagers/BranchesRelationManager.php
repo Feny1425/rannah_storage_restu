@@ -18,9 +18,17 @@ class BranchesRelationManager extends RelationManager
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('user')
+                Forms\Components\TextInput::make('name')
+                    ->autofocus()
                     ->required()
-                    ->maxLength(255),
+                    ->maxLength(255)
+                    ->placeholder(__('Branch Name'))
+                    ->label(__('Name')),
+                Forms\Components\TextInput::make('location')
+                    ->required()
+                    ->maxLength(255)
+                    ->placeholder(__('Branch Location'))
+                    ->label(__('Location')),
             ]);
     }
 
