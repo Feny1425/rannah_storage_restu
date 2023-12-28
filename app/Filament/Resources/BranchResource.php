@@ -48,20 +48,24 @@ class BranchResource extends Resource
                     ->searchable()
                     ->sortable()
                     ->label(__('Name')),
-                Tables\Columns\TextColumn::make('location')
-                    ->searchable()
-                    ->sortable()
-                    ->label(__('Location')),
                 Tables\Columns\TextColumn::make('user.name')
                     ->searchable()
                     ->sortable()
                     ->label(__('User')),
+                
             ])
             ->filters([
                 //
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\Action::make('location')
+                ->label(__('Location'))
+                ->url(function ($record) {
+                    // Assuming 'external_link' is the field containing the URL in the Branch model
+                    return "$record->location";
+                })
+                ->openUrlInNewTab(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

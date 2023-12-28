@@ -46,17 +46,21 @@ class BranchItemsRelationManager extends RelationManager
             ->filters([
                 //
             ])
-            ->headerActions([
-                Tables\Actions\CreateAction::make(),
-            ])
             ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                Tables\Actions\EditAction::make()
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ]);
+    }
+    public static function getModelLabel(): string
+    {
+        return __('Branch Item');
+    }
+    public static function getModelpluralLabel(): string
+    {
+        return __('Branch Items');
     }
 }

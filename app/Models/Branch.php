@@ -20,7 +20,6 @@ class Branch extends Model
     {
         return $this->hasMany(BranchItem::class);
     }
-
     protected static function booted()
     {
         static::created(function ($branch) {
@@ -34,4 +33,8 @@ class Branch extends Model
             }
         });
     }
+    public function getLocation() : string{
+        return $this->location;
+    }
+    
 }
