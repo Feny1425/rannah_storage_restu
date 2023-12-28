@@ -27,13 +27,23 @@ class ItemResource extends Resource
                 Forms\Components\TextInput::make('name')
                     ->required()
                     ->maxLength(255)
-                    ->placeholder(__('Item Name'))
-                    ->label(__('Name')),
+                    ->placeholder('اسم العنصر')
+                    ->label('الاسم'),
+                    Forms\Components\TextInput::make('nameEN')
+                        ->required()
+                        ->maxLength(255)
+                        ->placeholder('Item Name')
+                        ->label('Name'),
                 Forms\Components\TextInput::make('unit')
                     ->required()
                     ->maxLength(255)
-                    ->placeholder(__('Item Unit'))
-                    ->label(__('Unit')),
+                    ->placeholder('وحدة العنصر')
+                    ->label('الوحدة'),
+                    Forms\Components\TextInput::make('unitEN')
+                        ->required()
+                        ->maxLength(255)
+                        ->placeholder('Item Unit')
+                        ->label('Unit'),
                 Forms\Components\Select::make('type')
                     ->required()
                     ->options([
@@ -57,7 +67,7 @@ class ItemResource extends Resource
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('name')
+                Tables\Columns\TextColumn::make(__('nameEN'))
                     ->searchable()
                     ->label(__('Name')),
                 Tables\Columns\TextColumn::make('unit')

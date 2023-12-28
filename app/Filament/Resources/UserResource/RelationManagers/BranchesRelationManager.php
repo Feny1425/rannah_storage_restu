@@ -56,11 +56,6 @@ class BranchesRelationManager extends RelationManager
                     return "$record->location";
                 })
                 ->openUrlInNewTab(),
-            ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
             ]);
     }
 }

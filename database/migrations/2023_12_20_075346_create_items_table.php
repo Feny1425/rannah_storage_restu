@@ -14,7 +14,9 @@ return new class extends Migration {
             $table->id();
             $table->timestamps();
             $table->string("name");
+            $table->string("nameEN");
             $table->string("unit");
+            $table->string("unitEN");
             $table->unique(["name", "unit"]);
             $table->enum("type", ["food", "supplies"]);
             // sqlite
