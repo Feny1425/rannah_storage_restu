@@ -24,21 +24,21 @@ class ItemResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make(__('name'))
+                Forms\Components\TextInput::make(__('Name'))
                     ->required()
                     ->maxLength(255)
                     ->placeholder(__('Item Name')),
-                Forms\Components\TextInput::make('unit')
+                Forms\Components\TextInput::make(__('Unit'))
                     ->required()
                     ->maxLength(255)
                     ->placeholder(__('Item Unit')),
-                Forms\Components\Select::make('type')
+                Forms\Components\Select::make(__('Type'))
                     ->required()
                     ->options([
                         'food' => __('Food'),
                         'supplies' => __('Supplies'),
                     ])
-                    ->placeholder('Item Type'),
+                    ->placeholder(__('Item Type')),
             ]);
     }
 

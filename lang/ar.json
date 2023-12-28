@@ -1,3 +1,4 @@
+
 {
     "User Name": "اسم المستخدم",
     "User Password": "كلمة المرور",
@@ -24,7 +25,8 @@
     "Item Name": "اسم العنصر",
     "Item Unit": "وحدة العنصر",
     "Food": "غذاء",
-    "Supplies": "أداة"
+    "Supplies": "أداة",
+    "Item Type":"نوع العنصر"
 
     
 }
