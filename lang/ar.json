@@ -13,6 +13,7 @@
     "Location": "الموقع",
     "Unit": "الوحدة",
     "Type": "النوع",
+    "Quantity": "الكمية",
 
 
     "Branch Location": "موقع الفرع",
@@ -20,6 +21,10 @@
     "Branch": "فرع",
     "Branch Name": "اسم الفرع",
     "Branch Manager": "مالك الفرع",
+
+    "Item Quantity": "العدد الموجود في المخزن",
+    "Branch Item": "عنصر في الفرع",
+    "Branch Items": "العناصر الموجودة في الفرع",
 
     "Item": "عنصر",
     "Items": "عناصر",
