@@ -31,19 +31,5 @@ class AppServiceProvider extends ServiceProvider
                 ->locales(['ar','en']); // also accepts a closure
                 
         });
-        Filament::serving(function () {
-            Filament::registerNavigationGroups([
-                NavigationGroup::make()
-                     ->label(__('Users'))
-                     ->icon('heroicon-s-shopping-cart'),
-                NavigationGroup::make()
-                    ->label('Blog')
-                    ->icon('heroicon-s-pencil'),
-                NavigationGroup::make()
-                    ->label('Settings')
-                    ->icon('heroicon-s-cog')
-                    ->collapsed(),
-            ]);
-        });
     }
 }
