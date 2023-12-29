@@ -20,8 +20,6 @@ return new class extends Migration {
             $table->string('unit_en');
             $table->integer('batch_size');      // how many produced per batch
             $table->integer('expiry_duration'); // in hours
-            $table->string('name_unit')->virtualAs(SqlHelper::getConcatSql(['name', 'unit']));
-            $table->string('name_unit_en')->virtualAs(SqlHelper::getConcatSql(['name_en', 'unit_en']));
         });
     }
 

@@ -19,8 +19,6 @@ return new class extends Migration {
             $table->string("unit");
             $table->string("unit_en");
             $table->enum("type", ["food", "supplies"]);
-            $table->string('name_unit')->virtualAs(SqlHelper::getConcatSql(['name', 'unit']));
-            $table->string('name_unit_en')->virtualAs(SqlHelper::getConcatSql(['name_en', 'unit_en']));
         });
     }
 
