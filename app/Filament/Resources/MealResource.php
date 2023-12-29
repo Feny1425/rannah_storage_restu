@@ -16,8 +16,8 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 class MealResource extends Resource
 {
     protected static ?string $model = Meal::class;
-
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?int $navigationSort = 3;
 
     public static function form(Form $form): Form
     {
@@ -26,8 +26,28 @@ class MealResource extends Resource
                 Forms\Components\TextInput::make('name')
                     ->autofocus()
                     ->required()
-                    ->max(255)
+                    ->maxLength(255)
                     ->placeholder(__('Name')),
+                Forms\Components\TextInput::make('unit')
+                    ->required()
+                    ->maxLength(255)
+                    ->placeholder(__('Unit')),
+                Forms\Components\TextInput::make('name_en')
+                    ->required()
+                    ->maxLength(255)
+                    ->placeholder(__('Name (English)')),
+                Forms\Components\TextInput::make('unit_en')
+                    ->required()
+                    ->maxLength(255)
+                    ->placeholder(__('Unit (English)')),
+                Forms\Components\TextInput::make('batch_size')
+                    ->required()
+                    ->maxValue(255)
+                    ->placeholder(__('Batch Size')),
+                Forms\Components\TextInput::make('expiry_duration')
+                    ->required()
+                    ->maxValue(255)
+                    ->placeholder(__('Expiry Duration')),
             ]);
     }
 
