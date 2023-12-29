@@ -55,7 +55,22 @@ class MealResource extends Resource
     {
         return $table
             ->columns([
-                //
+                Tables\Columns\TextColumn::make('name_en')
+                    ->searchable()
+                    ->sortable()
+                    ->label(__('Name (English)')),
+                Tables\Columns\TextColumn::make('unit_en')
+                    ->searchable()
+                    ->sortable()
+                    ->label(__('Unit (English)')),
+                Tables\Columns\TextColumn::make('batch_size')
+                    ->searchable()
+                    ->sortable()
+                    ->label(__('Batch Size')),
+                Tables\Columns\TextColumn::make('expiry_duration')
+                    ->searchable()
+                    ->sortable()
+                    ->label(__('Expiry Duration')),
             ])
             ->filters([
                 //
@@ -73,7 +88,7 @@ class MealResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            RelationManagers\MealItemsRelationManager::class,
         ];
     }
 
