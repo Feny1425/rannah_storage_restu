@@ -1,3 +1,8 @@
+DON'T FORGET TO ADD
+            $this->app['request']->server->set('HTTPS',true);
+    IN App\Providers\AppServiceProvider IN register()
+
+
 To add new translation go to "lang\ar.json" then add:
     {
         //...other values
