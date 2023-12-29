@@ -8,6 +8,7 @@ use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class BranchMealsRelationManager extends RelationManager
@@ -32,11 +33,11 @@ class BranchMealsRelationManager extends RelationManager
         return $table
             ->recordTitleAttribute('id')
             ->columns([
-                Tables\Columns\TextColumn::make('meal.name_en')
+                Tables\Columns\TextColumn::make('meal.'.__('name_en'))
                     ->label(__('Name'))
                     ->searchable()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('meal.unit_en')
+                Tables\Columns\TextColumn::make('meal.'.__('unit_en'))
                     ->label(__('Unit'))
                     ->searchable()
                     ->sortable(),
@@ -51,5 +52,9 @@ class BranchMealsRelationManager extends RelationManager
             ->actions([
                 Tables\Actions\EditAction::make(),
             ]);
+    }
+    public static function getTitle(Model $ownerRecord, string $pageClass): string
+    {
+        return __('Meals');
     }
 }

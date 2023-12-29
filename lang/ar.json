@@ -14,8 +14,9 @@
     "Unit": "الوحدة",
     "Type": "النوع",
     "Quantity": "الكمية",
-    "Name (English)": "name",
-    "Unit (English)": "unit",
+    "name_en": "name",
+    "unit_en": "unit",
+    "hour": "ساعة",
 
 
     "Branch Location": "موقع الفرع",
@@ -29,14 +30,18 @@
     "Branch Items": "العناصر الموجودة في الفرع",
 
     "Item": "عنصر",
-    "Items": "عناصر",
+    "Items": "العناصر",
     "Item Name": "اسم العنصر",
     "Item Unit": "وحدة العنصر",
     "Food": "غذاء",
     "food": "غذاء",
     "Supplies": "أداة",
     "supplies": "أداة",
-    "Item Type":"نوع العنصر"
+    "Item Type":"نوع العنصر",
 
+    "Meal": "وجبة",
+    "Meals": "الوجبات",
+    "Batch Size": "الكمية الناتجة",
+    "Expiry Duration": "مدة الصلاحية"
     
 }

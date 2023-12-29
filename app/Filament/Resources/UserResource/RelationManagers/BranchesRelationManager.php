@@ -8,6 +8,7 @@ use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class BranchesRelationManager extends RelationManager
@@ -57,5 +58,8 @@ class BranchesRelationManager extends RelationManager
                 })
                 ->openUrlInNewTab(),
             ]);
+    }
+    public static function getTitle(Model $ownerRecord, string $pageClass): string{
+        return __('Branches');
     }
 }

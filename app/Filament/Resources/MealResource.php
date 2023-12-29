@@ -55,14 +55,14 @@ class MealResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('name_en')
+                Tables\Columns\TextColumn::make(__('name_en'))
                     ->searchable()
                     ->sortable()
-                    ->label(__('Name (English)')),
-                Tables\Columns\TextColumn::make('unit_en')
+                    ->label(__('Name')),
+                Tables\Columns\TextColumn::make(__('unit_en'))
                     ->searchable()
                     ->sortable()
-                    ->label(__('Unit (English)')),
+                    ->label(__('Unit')),
                 Tables\Columns\TextColumn::make('batch_size')
                     ->searchable()
                     ->sortable()
@@ -70,7 +70,7 @@ class MealResource extends Resource
                 Tables\Columns\TextColumn::make('expiry_duration')
                     ->searchable()
                     ->sortable()
-                    ->label(__('Expiry Duration')),
+                    ->label(__('Expiry Duration') .' (' . __('hour') . ')'),
             ])
             ->filters([
                 //
@@ -99,5 +99,15 @@ class MealResource extends Resource
             'create' => Pages\CreateMeal::route('/create'),
             'edit' => Pages\EditMeal::route('/{record}/edit'),
         ];
+    }
+
+    public static function getLabel(): string
+    {
+        return __('Meal');
+    }
+
+    public static function getpluralLabel(): string
+    {
+        return __('Meals');
     }
 }
