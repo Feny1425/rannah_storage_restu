@@ -33,11 +33,11 @@ class BranchItemsRelationManager extends RelationManager
             ->recordTitleAttribute('id')
             ->columns([
                 Tables\Columns\TextColumn::make('id'),
-                Tables\Columns\TextColumn::make('item.name')
+                Tables\Columns\TextColumn::make('item.name_en')
                     ->label(__('Name'))
                     ->searchable()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('item.unit')
+                Tables\Columns\TextColumn::make('item.unit_en')
                     ->label(__('Unit'))
                     ->searchable()
                     ->sortable(),

@@ -14,8 +14,8 @@
     "Unit": "الوحدة",
     "Type": "النوع",
     "Quantity": "الكمية",
-    "name_en": "name",
-    "unit_en": "unit",
+    "Name (English)": "name",
+    "Unit (English)": "unit",
 
 
     "Branch Location": "موقع الفرع",

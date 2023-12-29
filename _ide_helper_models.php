@@ -12,25 +12,37 @@
 
 namespace App\Models{
 /**
+ * App\Models\BaseModel
+ *
+ * @method static \Illuminate\Database\Eloquent\Builder|BaseModel newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|BaseModel newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|BaseModel query()
+ */
+	class BaseModel extends \Eloquent {}
+}
+
+namespace App\Models{
+/**
  * App\Models\Branch
  *
  * @property int $id
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property int $user_id
+ * @property int|null $manager_id
  * @property string $name
  * @property string $location
- * @property-read \App\Models\BranchItem|null $branchItems
- * @property-read \App\Models\User|null $user
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\BranchItem> $branch_items
+ * @property-read int|null $branch_items_count
+ * @property-read \App\Models\User|null $manager
  * @method static \Illuminate\Database\Eloquent\Builder|Branch newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Branch newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Branch query()
  * @method static \Illuminate\Database\Eloquent\Builder|Branch whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Branch whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Branch whereLocation($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Branch whereManagerId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Branch whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Branch whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Branch whereUserId($value)
  */
 	class Branch extends \Eloquent {}
 }
@@ -68,16 +80,20 @@ namespace App\Models{
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property string $name
+ * @property string $name_en
  * @property string $unit
- * @property string $type
+ * @property string $unit_en
+ * @property \App\Enums\Food $type
  * @method static \Illuminate\Database\Eloquent\Builder|Item newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Item newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Item query()
  * @method static \Illuminate\Database\Eloquent\Builder|Item whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Item whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Item whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Item whereNameEn($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Item whereType($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Item whereUnit($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Item whereUnitEn($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Item whereUpdatedAt($value)
  */
 	class Item extends \Eloquent {}
@@ -88,21 +104,25 @@ namespace App\Models{
  * App\Models\Meal
  *
  * @property int $id
- * @property string $name
- * @property string $unit
- * @property int $quantity
- * @property int $expiry_duration
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property string $name
+ * @property string $unit
+ * @property string $name_en
+ * @property string $unit_en
+ * @property int $batch_size
+ * @property int $expiry_duration
  * @method static \Illuminate\Database\Eloquent\Builder|Meal newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Meal newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Meal query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Meal whereBatchSize($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Meal whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Meal whereExpiryDuration($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Meal whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Meal whereName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Meal whereQuantity($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Meal whereNameEn($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Meal whereUnit($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Meal whereUnitEn($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Meal whereUpdatedAt($value)
  */
 	class Meal extends \Eloquent {}

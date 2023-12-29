@@ -66,9 +66,11 @@ class ItemResource extends Resource
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make(__('name_en'))
+                    ->label(__('Name (English)'))
                     ->searchable()
                     ->label(__('Name')),
                 Tables\Columns\TextColumn::make(__('unit_en'))
+                    ->label(__('Unit (English)'))
                     ->searchable()
                     ->label(__('Unit')),
                 Tables\Columns\TextColumn::make('type')
