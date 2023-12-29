@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\SqlHelper;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -14,13 +15,12 @@ return new class extends Migration {
             $table->id();
             $table->timestamps();
             $table->string("name");
-            $table->string("nameEN");
+            $table->string("name_en");
             $table->string("unit");
-            $table->string("unitEN");
-            $table->unique(["name", "unit"]);
+            $table->string("unit_en");
             $table->enum("type", ["food", "supplies"]);
-            // sqlite
-            $table->string('name_unit')->virtualAs('name || " " || unit');
+            $table->string('name_unit')->virtualAs(SqlHelper::getConcatSql(['name', 'unit']));
+            $table->string('name_unit_en')->virtualAs(SqlHelper::getConcatSql(['name_en', 'unit_en']));
         });
     }
 

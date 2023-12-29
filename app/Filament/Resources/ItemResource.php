@@ -30,21 +30,21 @@ class ItemResource extends Resource
                     ->maxLength(255)
                     ->placeholder('اسم العنصر')
                     ->label('الاسم'),
-                    Forms\Components\TextInput::make('nameEN')
-                        ->required()
-                        ->maxLength(255)
-                        ->placeholder('Item Name')
-                        ->label('Name'),
+                Forms\Components\TextInput::make('name_en')
+                    ->required()
+                    ->maxLength(255)
+                    ->placeholder('Item Name')
+                    ->label('Name'),
                 Forms\Components\TextInput::make('unit')
                     ->required()
                     ->maxLength(255)
                     ->placeholder('وحدة العنصر')
                     ->label('الوحدة'),
-                    Forms\Components\TextInput::make('unitEN')
-                        ->required()
-                        ->maxLength(255)
-                        ->placeholder('Item Unit')
-                        ->label('Unit'),
+                Forms\Components\TextInput::make('unit_en')
+                    ->required()
+                    ->maxLength(255)
+                    ->placeholder('Item Unit')
+                    ->label('Unit'),
                 Forms\Components\Select::make('type')
                     ->required()
                     ->options(Food::class)
@@ -65,10 +65,10 @@ class ItemResource extends Resource
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make(__('nameEN'))
+                Tables\Columns\TextColumn::make(__('name_en'))
                     ->searchable()
                     ->label(__('Name')),
-                Tables\Columns\TextColumn::make(__('unitEN'))
+                Tables\Columns\TextColumn::make(__('unit_en'))
                     ->searchable()
                     ->label(__('Unit')),
                 Tables\Columns\TextColumn::make('type')
@@ -104,11 +104,12 @@ class ItemResource extends Resource
             'edit' => Pages\EditItem::route('/{record}/edit'),
         ];
     }
-    
+
     public static function getLabel(): string
     {
         return __('Item');
     }
+
     public static function getpluralLabel(): string
     {
         return __('Items');
