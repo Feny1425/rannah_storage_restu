@@ -11,7 +11,7 @@ class SqlHelper
     {
         if (env('DB_CONNECTION') == 'sqlite') {
             return self::getConcatSqlite($columns, $divider);
-        } else if (env('DB_CONNECTION') == 'mysql') {
+        } else if (env('DB_CONNECTION') == 'mysql' || env('DB_CONNECTION') == 'mariadb') {
             return self::getConcatMysql($columns, $divider);
         } else {
             throw new \Exception("Unsupported database type");

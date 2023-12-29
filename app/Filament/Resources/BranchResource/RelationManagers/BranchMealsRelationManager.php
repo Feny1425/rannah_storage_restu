@@ -10,9 +10,9 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class BranchItemsRelationManager extends RelationManager
+class BranchMealsRelationManager extends RelationManager
 {
-    protected static string $relationship = 'branch_items';
+    protected static string $relationship = 'branch_meals';
 
     public function form(Form $form): Form
     {
@@ -32,11 +32,11 @@ class BranchItemsRelationManager extends RelationManager
         return $table
             ->recordTitleAttribute('id')
             ->columns([
-                Tables\Columns\TextColumn::make('item.name_en')
+                Tables\Columns\TextColumn::make('meal.name_en')
                     ->label(__('Name'))
                     ->searchable()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('item.unit_en')
+                Tables\Columns\TextColumn::make('meal.unit_en')
                     ->label(__('Unit'))
                     ->searchable()
                     ->sortable(),
@@ -49,17 +49,7 @@ class BranchItemsRelationManager extends RelationManager
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make()
+                Tables\Actions\EditAction::make(),
             ]);
-    }
-
-    public static function getLabel(): string
-    {
-        return __('Branch Item');
-    }
-
-    public static function getpluralLabel(): string
-    {
-        return __('Branch Items');
     }
 }

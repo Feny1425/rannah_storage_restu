@@ -82,6 +82,7 @@ class BranchResource extends Resource
     {
         return [
             RelationManagers\BranchItemsRelationManager::class,
+            RelationManagers\BranchMealsRelationManager::class,
         ];
     }
 

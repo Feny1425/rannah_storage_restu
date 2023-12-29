@@ -21,14 +21,27 @@ class Branch extends BaseModel
         return $this->hasMany(BranchItem::class);
     }
 
+    public function branch_meals(): HasMany
+    {
+        return $this->hasMany(BranchMeal::class);
+    }
+
     protected static function booted(): void
     {
         static::created(function ($branch) {
-            // create a branch item record without duplicating
+
             foreach (Item::all() as $item) {
                 BranchItem::firstOrCreate([
                     'branch_id' => $branch->id,
                     'item_id' => $item->id,
+                    'quantity' => 0
+                ]);
+            }
+
+            foreach (Meal::all() as $meal) {
+                BranchMeal::firstOrCreate([
+                    'branch_id' => $branch->id,
+                    'item_id' => $meal->id,
                     'quantity' => 0
                 ]);
             }

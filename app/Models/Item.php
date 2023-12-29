@@ -13,7 +13,7 @@ class Item extends BaseModel
     protected $casts = [
         'type' =>  Food::class,
     ];
-    protected static function booted()
+    protected static function booted(): void
     {
         static::created(function ($item) {
             // create a branch item record without duplicating
