@@ -15,7 +15,7 @@ class User extends Authenticatable
 
     public function branches(): HasMany
     {
-        return $this->hasMany(Branch::class);
+        return $this->hasMany(Branch::class, 'manager_id');
     }
 
     /**

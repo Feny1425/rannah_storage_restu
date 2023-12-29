@@ -7,20 +7,21 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class Branch extends Model
+class Branch extends BaseModel
 {
     use HasFactory;
 
-    public function user(): BelongsTo
+    public function manager(): BelongsTo
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'manager_id');
     }
 
     public function branch_items(): HasMany
     {
         return $this->hasMany(BranchItem::class);
     }
-    protected static function booted()
+
+    protected static function booted(): void
     {
         static::created(function ($branch) {
             // create a branch item record without duplicating
@@ -33,8 +34,10 @@ class Branch extends Model
             }
         });
     }
-    public function getLocation() : string{
+
+    public function getLocation(): string
+    {
         return $this->location;
     }
-    
+
 }

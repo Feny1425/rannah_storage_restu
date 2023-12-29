@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\BranchResource\Pages;
 use App\Filament\Resources\BranchResource\RelationManagers;
 use App\Models\Branch;
+use App\Models\User;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -18,6 +19,7 @@ class BranchResource extends Resource
     protected static ?string $model = Branch::class;
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
     protected static ?int $navigationSort = 1;
+
     public static function form(Form $form): Form
     {
         return $form
@@ -34,9 +36,9 @@ class BranchResource extends Resource
                     ->maxLength(255)
                     ->placeholder(__('Branch Location'))
                     ->label(__('Location')),
-                Forms\Components\Select::make('user_id')
+                Forms\Components\Select::make('manager_id')
                     ->label(__('Branch Manager'))
-                    ->relationship('user', 'name')
+                    ->relationship('manager', 'name')
                     ->placeholder(__('Select User'))
                     ->required(),
             ]);
@@ -50,11 +52,16 @@ class BranchResource extends Resource
                     ->searchable()
                     ->sortable()
                     ->label(__('Name')),
-                Tables\Columns\TextColumn::make('user.name')
+                Tables\Columns\TextColumn::make('manager.name')
+                    ->getStateUsing(function (Branch $record) {
+                        return [
+                            'manager.name' => $record->manager->name,
+                        ];
+                    })
                     ->searchable()
                     ->sortable()
                     ->label(__('User')),
-                
+
             ])
             ->filters([
                 //
@@ -62,12 +69,12 @@ class BranchResource extends Resource
             ->actions([
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\Action::make('location')
-                ->label(__('Location'))
-                ->url(function ($record) {
-                    // Assuming 'external_link' is the field containing the URL in the Branch model
-                    return "$record->location";
-                })
-                ->openUrlInNewTab(),
+                    ->label(__('Location'))
+                    ->url(function ($record) {
+                        // Assuming 'external_link' is the field containing the URL in the Branch model
+                        return "$record->location";
+                    })
+                    ->openUrlInNewTab(),
             ]);
     }
 
@@ -87,11 +94,12 @@ class BranchResource extends Resource
         ];
     }
 
-    
+
     public static function getLabel(): string
     {
         return __('Branch');
     }
+
     public static function getpluralLabel(): string
     {
         return __('Branches');
