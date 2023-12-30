@@ -18,7 +18,8 @@ class MealResource extends Resource
     protected static ?string $model = Meal::class;
 
     protected static ?string $activeNavigationIcon = 'heroicon-s-cake';
-    protected static ?string $navigationIcon = 'heroicon-o-cake';    protected static ?int $navigationSort = 3;
+    protected static ?string $navigationIcon = 'heroicon-o-cake';
+    protected static ?int $navigationSort = 3;
 
     public static function form(Form $form): Form
     {
@@ -71,7 +72,7 @@ class MealResource extends Resource
                 Tables\Columns\TextColumn::make('expiry_duration')
                     ->searchable()
                     ->sortable()
-                    ->label(__('Expiry Duration') .' (' . __('hour') . ')'),
+                    ->label(__('Expiry Duration') . ' (' . __('hour') . ')'),
             ])
             ->filters([
                 //
