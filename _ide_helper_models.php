@@ -33,6 +33,8 @@ namespace App\Models{
  * @property string $location
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\BranchItem> $branch_items
  * @property-read int|null $branch_items_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\BranchMeal> $branch_meals
+ * @property-read int|null $branch_meals_count
  * @property-read \App\Models\User|null $manager
  * @method static \Illuminate\Database\Eloquent\Builder|Branch newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Branch newQuery()
@@ -74,6 +76,31 @@ namespace App\Models{
 
 namespace App\Models{
 /**
+ * App\Models\BranchMeal
+ *
+ * @property int $id
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property int $branch_id
+ * @property int $meal_id
+ * @property int $quantity
+ * @property-read \App\Models\Branch $branch
+ * @property-read \App\Models\Meal $meal
+ * @method static \Illuminate\Database\Eloquent\Builder|BranchMeal newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|BranchMeal newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|BranchMeal query()
+ * @method static \Illuminate\Database\Eloquent\Builder|BranchMeal whereBranchId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|BranchMeal whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|BranchMeal whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|BranchMeal whereMealId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|BranchMeal whereQuantity($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|BranchMeal whereUpdatedAt($value)
+ */
+	class BranchMeal extends \Eloquent {}
+}
+
+namespace App\Models{
+/**
  * App\Models\Item
  *
  * @property int $id
@@ -84,6 +111,8 @@ namespace App\Models{
  * @property string $unit
  * @property string $unit_en
  * @property \App\Enums\Food $type
+ * @property-read mixed $name_unit
+ * @property-read mixed $name_unit_en
  * @method static \Illuminate\Database\Eloquent\Builder|Item newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Item newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Item query()
@@ -112,6 +141,10 @@ namespace App\Models{
  * @property string $unit_en
  * @property int $batch_size
  * @property int $expiry_duration
+ * @property-read mixed $name_unit
+ * @property-read mixed $name_unit_en
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\MealItem> $meal_items
+ * @property-read int|null $meal_items_count
  * @method static \Illuminate\Database\Eloquent\Builder|Meal newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Meal newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Meal query()
@@ -133,6 +166,8 @@ namespace App\Models{
  * App\Models\MealItem
  *
  * @property int $id
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
  * @property int $meal_id
  * @property int $item_id
  * @property int $quantity
@@ -141,10 +176,12 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|MealItem newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|MealItem newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|MealItem query()
+ * @method static \Illuminate\Database\Eloquent\Builder|MealItem whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|MealItem whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|MealItem whereItemId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|MealItem whereMealId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|MealItem whereQuantity($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|MealItem whereUpdatedAt($value)
  */
 	class MealItem extends \Eloquent {}
 }
