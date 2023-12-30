@@ -25,13 +25,4 @@ class Item extends BaseModel
             }
         });
     }
-    public function getNameUnitAttribute()
-    {
-        return $this->attributes['name'] . ' ' . $this->attributes['unit'];
-    }
-
-    public function getNameUnitEnAttribute()
-    {
-        return $this->attributes['name_en'] . ' ' . $this->attributes['unit_en'];
-    }
 }

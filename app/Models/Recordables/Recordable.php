@@ -10,6 +10,8 @@ class Recordable extends BaseModel
 {
     use HasFactory;
 
+    public $timestamps = false;
+
     public function record(): MorphOne
     {
         return $this->morphOne(Record::class, 'recordable');

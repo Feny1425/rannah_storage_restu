@@ -17,12 +17,12 @@ return new class extends Migration {
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->foreignId('branch_id')->constrained()->onDelete('cascade');
 
-            $table->foreignId('recordable_id');
-            $table->string('recordable_type');
+            $table->foreignId('recordable_id')->nullable();
+            $table->string('recordable_type')->nullable();
 
-            $table->foreignId('stockable_id');
-            $table->string('stockable_type');
-            $table->integer('stockable_quantity');
+            $table->foreignId('stockable_id')->nullable();
+            $table->string('stockable_type')->nullable();
+            $table->integer('stockable_quantity')->nullable();
         });
     }
 

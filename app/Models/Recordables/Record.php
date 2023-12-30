@@ -18,6 +18,8 @@ class Record extends BaseModel
 {
     use HasFactory;
 
+    public $timestamps = false;
+
     public function branch(): BelongsTo
     {
         return $this->belongsTo(Branch::class);
