@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Stockables;
 
+use App\Models\Branch;
+use App\Models\Item;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class BranchItem extends BaseModel
+class BranchItem extends Stockable
 {
     use HasFactory;
 

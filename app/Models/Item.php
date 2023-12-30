@@ -3,9 +3,8 @@
 namespace App\Models;
 
 use App\Enums\Food;
-use Illuminate\Database\Eloquent\Casts\Attribute;
+use App\Models\Stockables\BranchItem;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 
 class Item extends BaseModel
 {

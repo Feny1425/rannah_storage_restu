@@ -31,9 +31,9 @@ namespace App\Models{
  * @property int|null $manager_id
  * @property string $name
  * @property string $location
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\BranchItem> $branch_items
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Stockables\BranchItem> $branch_items
  * @property-read int|null $branch_items_count
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\BranchMeal> $branch_meals
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Stockables\BranchMeal> $branch_meals
  * @property-read int|null $branch_meals_count
  * @property-read \App\Models\User|null $manager
  * @method static \Illuminate\Database\Eloquent\Builder|Branch newModelQuery()
@@ -61,15 +61,15 @@ namespace App\Models{
  * @property int $quantity
  * @property-read \App\Models\Branch $branch
  * @property-read \App\Models\Item $item
- * @method static \Illuminate\Database\Eloquent\Builder|BranchItem newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|BranchItem newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|BranchItem query()
- * @method static \Illuminate\Database\Eloquent\Builder|BranchItem whereBranchId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|BranchItem whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|BranchItem whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|BranchItem whereItemId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|BranchItem whereQuantity($value)
- * @method static \Illuminate\Database\Eloquent\Builder|BranchItem whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Stockables\BranchItem newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Stockables\BranchItem newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Stockables\BranchItem query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Stockables\BranchItem whereBranchId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Stockables\BranchItem whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Stockables\BranchItem whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Stockables\BranchItem whereItemId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Stockables\BranchItem whereQuantity($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Stockables\BranchItem whereUpdatedAt($value)
  */
 	class BranchItem extends \Eloquent {}
 }
@@ -86,15 +86,15 @@ namespace App\Models{
  * @property int $quantity
  * @property-read \App\Models\Branch $branch
  * @property-read \App\Models\Meal $meal
- * @method static \Illuminate\Database\Eloquent\Builder|BranchMeal newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|BranchMeal newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|BranchMeal query()
- * @method static \Illuminate\Database\Eloquent\Builder|BranchMeal whereBranchId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|BranchMeal whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|BranchMeal whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|BranchMeal whereMealId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|BranchMeal whereQuantity($value)
- * @method static \Illuminate\Database\Eloquent\Builder|BranchMeal whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Stockables\BranchMeal newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Stockables\BranchMeal newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Stockables\BranchMeal query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Stockables\BranchMeal whereBranchId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Stockables\BranchMeal whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Stockables\BranchMeal whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Stockables\BranchMeal whereMealId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Stockables\BranchMeal whereQuantity($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Stockables\BranchMeal whereUpdatedAt($value)
  */
 	class BranchMeal extends \Eloquent {}
 }
