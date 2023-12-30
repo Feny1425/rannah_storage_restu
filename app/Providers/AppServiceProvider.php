@@ -15,8 +15,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        $this->app['request']->server->set('HTTPS',true);
-        
+        if (env('APP_ENV') !== 'local') {
+            $this->app['request']->server->set('HTTPS', true);
+        }
     }
 
     /**
@@ -28,8 +29,8 @@ class AppServiceProvider extends ServiceProvider
 
         LanguageSwitch::configureUsing(function (LanguageSwitch $switch) {
             $switch
-                ->locales(['ar','en']); // also accepts a closure
-                
+                ->locales(['ar', 'en']); // also accepts a closure
+
         });
     }
 }
