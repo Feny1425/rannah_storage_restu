@@ -28,14 +28,12 @@ class UserResource extends Resource
                     ->autofocus()
                     ->required()
                     ->maxLength(255)
-                    ->unique(User::class, 'name')
                     ->placeholder(__('User Name'))
                     ->label(__('Name')),
                 Forms\Components\TextInput::make('email')
                     ->label(__('Email'))
                     ->required()
                     ->email()
-                    ->unique(User::class, 'email')
                     ->placeholder(__('Email')),
                 Forms\Components\TextInput::make('password')
                     ->required()
