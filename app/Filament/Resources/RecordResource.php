@@ -5,6 +5,8 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\RecordResource\Pages;
 use App\Filament\Resources\RecordResource\RelationManagers;
 use App\Models\Recordables\Record;
+use App\Models\Stockables\BranchItem;
+use App\Models\Stockables\BranchMeal;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -29,23 +31,31 @@ class RecordResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('user.name')
-                    ->label('User')
+                    ->label(__('User Name'))
                     ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('branch.name')
-                    ->label('Branch')
+                    ->label(__('Branch Name'))
                     ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('stockable.name')
-                    ->label('Stockable')
+                    ->getStateUsing(function (Record $record) {
+                        if ($record->stockable_type === BranchItem::class) {
+                            return $record->stockable->item->name;
+                        } else if ($record->stockable_type === BranchMeal::class) {
+                            return $record->stockable->meal->name;
+                        }
+                        return null;
+                    })
+                    ->label(__('Item/Meal Name'))
                     ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('stockable_quantity')
-                    ->label('Quantity')
+                    ->label(__('Quantity'))
                     ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
-                    ->label('Date')
+                    ->label(__('Created At'))
                     ->searchable()
                     ->sortable(),
             ])

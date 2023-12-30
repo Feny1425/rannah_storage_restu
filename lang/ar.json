@@ -43,6 +43,10 @@
     "Meal": "وجبة",
     "Meals": "الوجبات",
     "Batch Size": "الكمية الناتجة",
-    "Expiry Duration": "مدة الصلاحية"
-    
+    "Expiry Duration": "مدة الصلاحية",
+
+    "Item/Meal Name": "اسم العنصر/الوجبة",
+
+    "Created At": "تاريخ الانشاء"
+
 }
