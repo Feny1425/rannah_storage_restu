@@ -3,7 +3,7 @@
 namespace App\Policies;
 
 use Illuminate\Auth\Access\Response;
-use App\Models\BranchItem;
+use App\Models\Stockables\BranchItem;
 use App\Models\User;
 
 class BranchItemPolicy

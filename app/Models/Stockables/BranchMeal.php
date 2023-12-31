@@ -1,7 +1,10 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Stockables;
 
+use App\Models\BaseModels\Stockable;
+use App\Models\Branch;
+use App\Models\Meal;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class BranchMeal extends Stockable

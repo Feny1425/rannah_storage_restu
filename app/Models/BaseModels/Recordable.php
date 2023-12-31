@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\BaseModels;
 
+use App\Models\Recordables\Record;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 

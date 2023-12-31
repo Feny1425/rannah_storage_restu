@@ -20,7 +20,6 @@ return [
 
     'guard_names' => [
         'web' => 'web',
-        'api' => 'api',
     ],
 
     'toggleable_guard_names' => [
@@ -32,7 +31,7 @@ return [
         ],
     ],
 
-    'default_guard_name' => null,
+    'default_guard_name' => 'web',
 
     'model_filter_key' => 'return \'%\'.$key;', // Eg: 'return \'%\'.$key.'\%\';'
 
@@ -50,7 +49,6 @@ return [
 
         'guard_names' => [
             'web',
-            'api',
         ],
 
         'permission_affixes' => [
@@ -96,7 +94,8 @@ return [
          */
         'model_directories' => [
             app_path('Models'),
-            //app_path('Domains/Forum')
+            app_path('Models/Recordables'),
+            app_path('Models/Stockables'),
         ],
 
         /*

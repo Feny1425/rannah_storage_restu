@@ -3,7 +3,7 @@
 namespace App\Policies;
 
 use Illuminate\Auth\Access\Response;
-use App\Models\ImportExportRecord;
+use App\Models\Recordables\ImportExportRecord;
 use App\Models\User;
 
 class ImportExportRecordPolicy

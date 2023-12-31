@@ -2,8 +2,7 @@
 
 namespace App\Policies;
 
-use Illuminate\Auth\Access\Response;
-use App\Models\Stockable;
+use App\Models\BaseModels\Stockable;
 use App\Models\User;
 
 class StockablePolicy

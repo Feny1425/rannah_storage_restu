@@ -3,7 +3,7 @@
 namespace App\Policies;
 
 use Illuminate\Auth\Access\Response;
-use App\Models\ProducedMealRecord;
+use App\Models\Recordables\ProducedMealRecord;
 use App\Models\User;
 
 class ProducedMealRecordPolicy

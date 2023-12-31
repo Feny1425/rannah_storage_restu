@@ -2,8 +2,7 @@
 
 namespace App\Policies;
 
-use Illuminate\Auth\Access\Response;
-use App\Models\Recordable;
+use App\Models\BaseModels\Recordable;
 use App\Models\User;
 
 class RecordablePolicy

@@ -3,7 +3,7 @@
 namespace App\Policies;
 
 use Illuminate\Auth\Access\Response;
-use App\Models\BranchMeal;
+use App\Models\Stockables\BranchMeal;
 use App\Models\User;
 
 class BranchMealPolicy

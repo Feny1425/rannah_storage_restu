@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Models\BaseModels\BaseModel;
+use App\Models\Stockables\BranchMeal;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 

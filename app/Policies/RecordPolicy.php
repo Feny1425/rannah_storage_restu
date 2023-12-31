@@ -3,7 +3,7 @@
 namespace App\Policies;
 
 use Illuminate\Auth\Access\Response;
-use App\Models\Record;
+use App\Models\Recordables\Record;
 use App\Models\User;
 
 class RecordPolicy

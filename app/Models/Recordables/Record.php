@@ -1,7 +1,12 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Recordables;
 
+use App\Models\BaseModels\BaseModel;
+use App\Models\BaseModels\Recordable;
+use App\Models\BaseModels\Stockable;
+use App\Models\Branch;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
