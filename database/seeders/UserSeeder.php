@@ -60,7 +60,7 @@ class UserSeeder extends Seeder
         ]);
 
         // assign permissions to roles
-        $superAdminRole->givePermissionTo(Permission::where('guard_name', 'web')->get());
+        // $superAdminRole->givePermissionTo(Permission::where('guard_name', 'web')->get()); // no need for this since we will use has super admin trait on User model
 
         // assign roles to users
         $superAdminUser->assignRole($superAdminRole);
