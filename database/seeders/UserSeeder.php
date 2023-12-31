@@ -6,7 +6,9 @@ use App\Enums\RoleEnum;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Str;
+use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
 class UserSeeder extends Seeder
@@ -16,6 +18,7 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
+        // roles
         $superAdminRole = Role::create([
             'name' => RoleEnum::SUPER_ADMIN,
             'guard_name' => 'web',
@@ -41,6 +44,10 @@ class UserSeeder extends Seeder
             'guard_name' => 'web',
         ]);
 
+        // permissions
+        Artisan::call('permissions:sync -COPY');
+
+        // users
         $superAdminUser = User::create([
             'name' => 'Super User',
             'email' => 'admin@admin.com',
@@ -52,6 +59,10 @@ class UserSeeder extends Seeder
             'password' => bcrypt((string)Str::uuid()),
         ]);
 
+        // assign permissions to roles
+        $superAdminRole->givePermissionTo(Permission::where('guard_name', 'web')->get());
+
+        // assign roles to users
         $superAdminUser->assignRole($superAdminRole);
         $systemUser->assignRole($systemRole);
     }
