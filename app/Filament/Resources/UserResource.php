@@ -45,6 +45,18 @@ class UserResource extends Resource
                     ->password()
                     ->placeholder(__('User Password'))
                     ->label(__('Password')),
+                Forms\Components\Select::make('roles')
+                    ->multiple()
+                    ->searchable()
+                    ->preload()
+                    ->relationship('roles', 'name')
+                    ->label(__('filament-spatie-roles-permissions::filament-spatie.field.roles')),
+                Forms\Components\Select::make('permissions')
+                    ->multiple()
+                    ->searchable()
+                    ->preload()
+                    ->relationship('permissions', 'name')
+                    ->label(__('filament-spatie-roles-permissions::filament-spatie.field.permissions')),
             ]);
     }
 
@@ -89,11 +101,12 @@ class UserResource extends Resource
             'edit' => Pages\EditUser::route('/{record}/edit'),
         ];
     }
-    
+
     public static function getLabel(): string
     {
         return __('User');
     }
+
     public static function getpluralLabel(): string
     {
         return __('Users');
