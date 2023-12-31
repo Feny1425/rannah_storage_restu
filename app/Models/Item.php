@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use App\Enums\Food;
-use App\Models\Stockables\BranchItem;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Item extends BaseModel

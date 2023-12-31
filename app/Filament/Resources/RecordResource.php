@@ -4,16 +4,12 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\RecordResource\Pages;
 use App\Filament\Resources\RecordResource\RelationManagers;
-use App\Models\Recordables\Record;
-use App\Models\Stockables\BranchItem;
-use App\Models\Stockables\BranchMeal;
-use Filament\Forms;
-use Filament\Forms\Form;
+use App\Models\BranchItem;
+use App\Models\BranchMeal;
+use App\Models\Record;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class RecordResource extends Resource
 {

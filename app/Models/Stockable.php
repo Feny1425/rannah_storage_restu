@@ -1,13 +1,8 @@
 <?php
 
-namespace App\Models\Stockables;
+namespace App\Models;
 
-use App\Models\BaseModel;
-use App\Models\Branch;
-use App\Models\Recordables\QuantityEditRecord;
-use App\Models\Recordables\Record;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\MorphOne;
 
 
 /**

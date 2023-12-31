@@ -31,9 +31,9 @@ namespace App\Models{
  * @property int|null $manager_id
  * @property string $name
  * @property string $location
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Stockables\BranchItem> $branch_items
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\BranchItem> $branch_items
  * @property-read int|null $branch_items_count
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Stockables\BranchMeal> $branch_meals
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\BranchMeal> $branch_meals
  * @property-read int|null $branch_meals_count
  * @property-read \App\Models\User|null $manager
  * @method static \Illuminate\Database\Eloquent\Builder|Branch newModelQuery()
@@ -47,6 +47,85 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|Branch whereUpdatedAt($value)
  */
 	class Branch extends \Eloquent {}
+}
+
+namespace App\Models{
+/**
+ * App\Models\BranchItem
+ *
+ * @property int $id
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property int $branch_id
+ * @property int $item_id
+ * @property int $quantity
+ * @property-read \App\Models\Branch $branch
+ * @property-read \App\Models\Item $item
+ * @method static \Illuminate\Database\Eloquent\Builder|BranchItem newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|BranchItem newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|BranchItem query()
+ * @method static \Illuminate\Database\Eloquent\Builder|BranchItem whereBranchId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|BranchItem whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|BranchItem whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|BranchItem whereItemId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|BranchItem whereQuantity($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|BranchItem whereUpdatedAt($value)
+ */
+	class BranchItem extends \Eloquent {}
+}
+
+namespace App\Models{
+/**
+ * App\Models\BranchMeal
+ *
+ * @property int $id
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property int $branch_id
+ * @property int $meal_id
+ * @property int $quantity
+ * @property-read \App\Models\Branch $branch
+ * @property-read \App\Models\Meal $meal
+ * @method static \Illuminate\Database\Eloquent\Builder|BranchMeal newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|BranchMeal newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|BranchMeal query()
+ * @method static \Illuminate\Database\Eloquent\Builder|BranchMeal whereBranchId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|BranchMeal whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|BranchMeal whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|BranchMeal whereMealId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|BranchMeal whereQuantity($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|BranchMeal whereUpdatedAt($value)
+ */
+	class BranchMeal extends \Eloquent {}
+}
+
+namespace App\Models{
+/**
+ * App\Models\ImportExportRecord
+ *
+ * @property int $id
+ * @property int $record_id
+ * @property int $import_branch_id
+ * @property int $export_branch_id
+ * @property int $quantity
+ * @property string $status
+ * @property string|null $status_updated_at
+ * @property int|null $status_updated_by
+ * @property string|null $status_updated_reason
+ * @method static \Illuminate\Database\Eloquent\Builder|ImportExportRecord newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|ImportExportRecord newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|ImportExportRecord query()
+ * @method static \Illuminate\Database\Eloquent\Builder|ImportExportRecord whereExportBranchId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ImportExportRecord whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ImportExportRecord whereImportBranchId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ImportExportRecord whereQuantity($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ImportExportRecord whereRecordId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ImportExportRecord whereStatus($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ImportExportRecord whereStatusUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ImportExportRecord whereStatusUpdatedBy($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ImportExportRecord whereStatusUpdatedReason($value)
+ */
+	class ImportExportRecord extends \Eloquent {}
 }
 
 namespace App\Models{
@@ -134,43 +213,14 @@ namespace App\Models{
 	class MealItem extends \Eloquent {}
 }
 
-namespace App\Models\Recordables{
+namespace App\Models{
 /**
- * App\Models\Recordables\ImportExportRecord
- *
- * @property int $id
- * @property int $record_id
- * @property int $import_branch_id
- * @property int $export_branch_id
- * @property int $quantity
- * @property string $status
- * @property string|null $status_updated_at
- * @property int|null $status_updated_by
- * @property string|null $status_updated_reason
- * @method static \Illuminate\Database\Eloquent\Builder|ImportExportRecord newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|ImportExportRecord newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|ImportExportRecord query()
- * @method static \Illuminate\Database\Eloquent\Builder|ImportExportRecord whereExportBranchId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|ImportExportRecord whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|ImportExportRecord whereImportBranchId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|ImportExportRecord whereQuantity($value)
- * @method static \Illuminate\Database\Eloquent\Builder|ImportExportRecord whereRecordId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|ImportExportRecord whereStatus($value)
- * @method static \Illuminate\Database\Eloquent\Builder|ImportExportRecord whereStatusUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|ImportExportRecord whereStatusUpdatedBy($value)
- * @method static \Illuminate\Database\Eloquent\Builder|ImportExportRecord whereStatusUpdatedReason($value)
- */
-	class ImportExportRecord extends \Eloquent {}
-}
-
-namespace App\Models\Recordables{
-/**
- * App\Models\Recordables\ProducedMealRecord
+ * App\Models\ProducedMealRecord
  *
  * @property int $id
  * @property int $record_id
  * @property int $meal_id
- * @property-read \App\Models\Recordables\Record|null $record
+ * @property-read \App\Models\Record|null $record
  * @method static \Illuminate\Database\Eloquent\Builder|ProducedMealRecord newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|ProducedMealRecord newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|ProducedMealRecord query()
@@ -181,15 +231,15 @@ namespace App\Models\Recordables{
 	class ProducedMealRecord extends \Eloquent {}
 }
 
-namespace App\Models\Recordables{
+namespace App\Models{
 /**
- * App\Models\Recordables\QuantityEditRecord
+ * App\Models\QuantityEditRecord
  *
  * @property int $id
  * @property int $record_id
  * @property int $old_quantity
  * @property int $new_quantity
- * @property-read \App\Models\Recordables\Record|null $record
+ * @property-read \App\Models\Record|null $record
  * @method static \Illuminate\Database\Eloquent\Builder|QuantityEditRecord newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|QuantityEditRecord newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|QuantityEditRecord query()
@@ -201,9 +251,9 @@ namespace App\Models\Recordables{
 	class QuantityEditRecord extends \Eloquent {}
 }
 
-namespace App\Models\Recordables{
+namespace App\Models{
 /**
- * App\Models\Recordables\Record
+ * App\Models\Record
  *
  * @property-read Recordable $recordable
  * @property-read Stockable $stockable
@@ -234,11 +284,11 @@ namespace App\Models\Recordables{
 	class Record extends \Eloquent {}
 }
 
-namespace App\Models\Recordables{
+namespace App\Models{
 /**
- * App\Models\Recordables\Recordable
+ * App\Models\Recordable
  *
- * @property-read \App\Models\Recordables\Record|null $record
+ * @property-read \App\Models\Record|null $record
  * @method static \Illuminate\Database\Eloquent\Builder|Recordable newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Recordable newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Recordable query()
@@ -246,59 +296,9 @@ namespace App\Models\Recordables{
 	class Recordable extends \Eloquent {}
 }
 
-namespace App\Models\Stockables{
+namespace App\Models{
 /**
- * App\Models\Stockables\BranchItem
- *
- * @property int $id
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
- * @property int $branch_id
- * @property int $item_id
- * @property int $quantity
- * @property-read \App\Models\Branch $branch
- * @property-read \App\Models\Item $item
- * @method static \Illuminate\Database\Eloquent\Builder|BranchItem newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|BranchItem newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|BranchItem query()
- * @method static \Illuminate\Database\Eloquent\Builder|BranchItem whereBranchId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|BranchItem whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|BranchItem whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|BranchItem whereItemId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|BranchItem whereQuantity($value)
- * @method static \Illuminate\Database\Eloquent\Builder|BranchItem whereUpdatedAt($value)
- */
-	class BranchItem extends \Eloquent {}
-}
-
-namespace App\Models\Stockables{
-/**
- * App\Models\Stockables\BranchMeal
- *
- * @property int $id
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
- * @property int $branch_id
- * @property int $meal_id
- * @property int $quantity
- * @property-read \App\Models\Branch $branch
- * @property-read \App\Models\Meal $meal
- * @method static \Illuminate\Database\Eloquent\Builder|BranchMeal newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|BranchMeal newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|BranchMeal query()
- * @method static \Illuminate\Database\Eloquent\Builder|BranchMeal whereBranchId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|BranchMeal whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|BranchMeal whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|BranchMeal whereMealId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|BranchMeal whereQuantity($value)
- * @method static \Illuminate\Database\Eloquent\Builder|BranchMeal whereUpdatedAt($value)
- */
-	class BranchMeal extends \Eloquent {}
-}
-
-namespace App\Models\Stockables{
-/**
- * App\Models\Stockables\Stockable
+ * App\Models\Stockable
  *
  * @property int $quantity
  * @method static \Illuminate\Database\Eloquent\Builder|Stockable newModelQuery()
@@ -324,12 +324,18 @@ namespace App\Models{
  * @property-read int|null $branches_count
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection<int, \Illuminate\Notifications\DatabaseNotification> $notifications
  * @property-read int|null $notifications_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Permission\Models\Permission> $permissions
+ * @property-read int|null $permissions_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Permission\Models\Role> $roles
+ * @property-read int|null $roles_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \Laravel\Sanctum\PersonalAccessToken> $tokens
  * @property-read int|null $tokens_count
  * @method static \Database\Factories\UserFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|User newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|User newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|User permission($permissions, $without = false)
  * @method static \Illuminate\Database\Eloquent\Builder|User query()
+ * @method static \Illuminate\Database\Eloquent\Builder|User role($roles, $guard = null, $without = false)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereEmail($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereEmailVerifiedAt($value)
@@ -338,6 +344,8 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|User wherePassword($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereRememberToken($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User withoutPermission($permissions)
+ * @method static \Illuminate\Database\Eloquent\Builder|User withoutRole($roles, $guard = null)
  */
 	class User extends \Eloquent implements \Filament\Models\Contracts\FilamentUser {}
 }

@@ -1,9 +1,7 @@
 <?php
 
-namespace App\Models\Stockables;
+namespace App\Models;
 
-use App\Models\Branch;
-use App\Models\Item;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 

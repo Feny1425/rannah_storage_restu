@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Models\Recordables;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class ProducedMealRecord extends Recordable
+class ImportExportRecord extends Model
 {
     use HasFactory;
 }

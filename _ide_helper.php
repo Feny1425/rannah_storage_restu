@@ -4,7 +4,7 @@
 
 /**
  * A helper file for Laravel, to provide autocomplete information to your IDE
- * Generated for Laravel 10.38.2.
+ * Generated for Laravel 10.39.0.
  *
  * This file should not be included in your code, only analyzed by your IDE!
  *
@@ -10530,6 +10530,18 @@
                         return $instance->setConnectionName($name);
         }
                     /**
+         * Get the maximum number of attempts for an object-based queue handler.
+         *
+         * @param mixed $job
+         * @return mixed 
+         * @static 
+         */ 
+        public static function getJobTries($job)
+        {            //Method inherited from \Illuminate\Queue\Queue         
+                        /** @var \Illuminate\Queue\SyncQueue $instance */
+                        return $instance->getJobTries($job);
+        }
+                    /**
          * Get the backoff for an object-based queue handler.
          *
          * @param mixed $job
@@ -19803,6 +19815,28 @@
         public static function lazy($enabled = true)
         {
                         return \Illuminate\Routing\Route::lazy($enabled);
+        }
+                    /**
+         * 
+         *
+         * @see \Spatie\Permission\PermissionServiceProvider::registerMacroHelpers()
+         * @param mixed $roles
+         * @static 
+         */ 
+        public static function role($roles = [])
+        {
+                        return \Illuminate\Routing\Route::role($roles);
+        }
+                    /**
+         * 
+         *
+         * @see \Spatie\Permission\PermissionServiceProvider::registerMacroHelpers()
+         * @param mixed $permissions
+         * @static 
+         */ 
+        public static function permission($permissions = [])
+        {
+                        return \Illuminate\Routing\Route::permission($permissions);
         }
          
     }

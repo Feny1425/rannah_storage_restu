@@ -2,8 +2,6 @@
 
 namespace App\Models;
 
-use App\Models\Stockables\BranchItem;
-use App\Models\Stockables\BranchMeal;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
