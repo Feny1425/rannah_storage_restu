@@ -29,7 +29,7 @@ class AdminPanelProvider extends PanelProvider
             ->default()
             ->plugin(FilamentSpatieRolesPermissionsPlugin::make())
             ->id('admin')
-            ->path('')
+            ->path('admin')
             ->login()
             ->colors([
                 'primary' => Color::Amber,
