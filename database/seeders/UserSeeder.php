@@ -67,11 +67,11 @@ class UserSeeder extends Seeder
         // assign permissions to roles
         // $superAdminRole->givePermissionTo(Permission::where('guard_name', 'web')->get()); // no need for this since we will use has super admin trait on User model
         $ownerRole
+            // ->givePermissionTo('view-any Report')
             ->givePermissionTo('view-any Record')
-            ->givePermissionTo('view-any Report')
             ->givePermissionTo('view-any BranchItem')
             ->givePermissionTo('view-any BranchMeal')
-            ->givePermissionTo('update user');
+            ->givePermissionTo('update User');
 
         // assign roles to users
         $superAdminUser->assignRole($superAdminRole);

@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\User;
+
 return [
 
     'preload_roles' => true,
@@ -113,7 +115,7 @@ return [
         ],
 
         'excluded_policy_models' => [
-            \App\Models\User::class,
+            User::class,
         ],
 
         /*
@@ -123,7 +125,7 @@ return [
             //'view-log'
         ],
 
-        'user_model' => \App\Models\User::class,
+        'user_model' => User::class,
 
         'policies_namespace' => 'App\Policies',
     ],

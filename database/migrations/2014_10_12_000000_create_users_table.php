@@ -14,7 +14,6 @@ return new class extends Migration {
             $table->id();
             $table->rememberToken();
             $table->timestamps();
-            $table->foreignId('branch_id')->nullable()->constrained('branches')->onDelete('set null');
             $table->string('name');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
