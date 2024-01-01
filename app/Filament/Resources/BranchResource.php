@@ -27,10 +27,12 @@ class BranchResource extends Resource
     {
         $base = parent::getEloquentQuery();
         $user = Auth::user();
-        if (Auth::user()->hasRole(RoleEnum::OWNER)) {
-            return $base->where('manager_id', $user->id);
+
+        if ($user->hasRole(RoleEnum::SUPER_ADMIN)) {
+            return $base;
         }
-        return $base->where('id', $user->branch_id);
+
+        return $base->where('id', $user->branch_id)->orWhere('manager_id', $user->id);
     }
 
     public static function form(Form $form): Form
@@ -41,13 +43,14 @@ class BranchResource extends Resource
                     ->autofocus()
                     ->required()
                     ->maxLength(255)
-                    ->unique(Branch::class, 'name')
+                    ->unique(Branch::class, 'name', null, true)
                     ->placeholder(__('Branch Name'))
                     ->label(__('Name')),
                 Forms\Components\TextInput::make('location')
                     ->required()
                     ->maxLength(255)
                     ->placeholder(__('Branch Location'))
+                    ->url()
                     ->label(__('Location')),
                 Forms\Components\Select::make('manager_id')
                     ->label(__('Branch Manager'))
