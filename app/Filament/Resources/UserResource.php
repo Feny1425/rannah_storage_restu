@@ -45,6 +45,9 @@ class UserResource extends Resource
                     ->password()
                     ->placeholder(__('User Password'))
                     ->label(__('Password')),
+                Forms\Components\Select::make('branch_id')
+                    ->relationship('branch', 'name')
+                    ->label(__('Branch')),
                 Forms\Components\Select::make('roles')
                     ->multiple()
                     ->searchable()
@@ -89,7 +92,7 @@ class UserResource extends Resource
     public static function getRelations(): array
     {
         return [
-            RelationManagers\BranchesRelationManager::class,
+            //
         ];
     }
 

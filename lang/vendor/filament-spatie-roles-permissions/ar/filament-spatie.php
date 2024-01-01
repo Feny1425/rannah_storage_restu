@@ -20,6 +20,7 @@ return [
 
     'section.permission' => 'إذن',
     'section.permissions' => 'الأذونات',
+    'section.users' => 'المستخدمين',
     'section.role' => 'صلاحية',
     'section.roles' => 'الصلاحيات',
     'section.roles_and_permissions' => 'الصلاحيات والأذونات',

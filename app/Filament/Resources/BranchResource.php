@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use App\Enums\RoleEnum;
 use App\Filament\Resources\BranchResource\Pages;
 use App\Filament\Resources\BranchResource\RelationManagers;
 use App\Models\Branch;
@@ -13,6 +14,7 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\Facades\Auth;
 
 class BranchResource extends Resource
 {
@@ -20,6 +22,16 @@ class BranchResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-building-storefront';
     protected static ?string $activeNavigationIcon = 'heroicon-s-building-storefront';
     protected static ?int $navigationSort = 1;
+
+    public static function getEloquentQuery(): Builder
+    {
+        $base = parent::getEloquentQuery();
+        $user = Auth::user();
+        if (Auth::user()->hasRole(RoleEnum::OWNER)) {
+            return $base->where('manager_id', $user->id);
+        }
+        return $base->where('id', $user->branch_id);
+    }
 
     public static function form(Form $form): Form
     {
@@ -62,7 +74,6 @@ class BranchResource extends Resource
                     ->searchable()
                     ->sortable()
                     ->label(__('User')),
-
             ])
             ->filters([
                 //

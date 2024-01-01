@@ -18,6 +18,11 @@ class Branch extends BaseModel
         return $this->belongsTo(User::class, 'manager_id');
     }
 
+    public function users(): HasMany
+    {
+        return $this->hasMany(User::class, 'branch_id');
+    }
+
     public function branch_items(): HasMany
     {
         return $this->hasMany(BranchItem::class);
