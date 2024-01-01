@@ -3,13 +3,12 @@
 namespace Database\Seeders;
 
 use App\Enums\RoleEnum;
+use App\Models\Permission;
+use App\Models\Role;
 use App\Models\User;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Str;
-use Spatie\Permission\Models\Permission;
-use Spatie\Permission\Models\Role;
 
 class UserSeeder extends Seeder
 {
@@ -44,8 +43,14 @@ class UserSeeder extends Seeder
             'guard_name' => 'web',
         ]);
 
-        // permissions
+        // permissions - https://github.com/Althinect/filament-spatie-roles-permissions
         Artisan::call('permissions:sync -COPY');
+        Permission::insert([
+            [
+                'name' => 'view reports',
+                'guard_name' => 'web',
+            ]
+        ]);
 
         // users
         $superAdminUser = User::create([
@@ -61,6 +66,12 @@ class UserSeeder extends Seeder
 
         // assign permissions to roles
         // $superAdminRole->givePermissionTo(Permission::where('guard_name', 'web')->get()); // no need for this since we will use has super admin trait on User model
+        $ownerRole
+            ->givePermissionTo('view-any Record')
+            ->givePermissionTo('view-any Report')
+            ->givePermissionTo('view-any BranchItem')
+            ->givePermissionTo('view-any BranchMeal')
+            ->givePermissionTo('update user');
 
         // assign roles to users
         $superAdminUser->assignRole($superAdminRole);

@@ -83,6 +83,7 @@ class BranchResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\ViewAction::make(),
                 Tables\Actions\Action::make('location')
                     ->label(__('Location'))
                     ->url(function ($record) {
