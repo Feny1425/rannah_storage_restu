@@ -49,17 +49,12 @@ class BranchItemResource extends Resource
     public static function form(Form $form): Form
     {
         return $form
-            ->schema([ 
-                Forms\Components\TextInput::make('quantity')
-                    ->autofocus()
-                    ->numeric()
-                    ->inputMode('decimal')
-                    ->minValue(1)
-                    ->nullable(false)
-                    ->placeholder(__('Added Quantity'))
-                    ->label(__('Quantity')),
-                    
-            ]);
+        ->schema([
+            // Some fields here
+            self::getShipmentField($form->getOperation()),
+            // Other fields there
+        ]);
+            ;
     }
 
     public static function table(Table $table): Table
@@ -85,6 +80,7 @@ class BranchItemResource extends Resource
             ->actions([
                 Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -106,8 +102,31 @@ class BranchItemResource extends Resource
             'index' => Pages\ListBranchItems::route('/'),
             'create' => Pages\CreateBranchItem::route('/create'),
             'view' => Pages\ViewBranchItem::route('/{record}'),
-            'edit' => Pages\EditBranchItem::route('/{record}/edit'),
+            'edit' => Pages\EditBranchItem::route('/{record}/add'),
+            'decrease' => Pages\DecreaseBranchItem::route('/{record}/decrease'),
         ];
     }
-    
+    protected static function getShipmentField(string $operation)
+    {
+        if ($operation === 'edit') {
+            return
+                Forms\Components\TextInput::make('quantity')
+                    ->autofocus()
+                    ->numeric()
+                    ->inputMode('decimal')
+                    ->minValue(1)
+                    ->nullable(false)
+                    ->placeholder(__('Added Quantity'))
+                    ->label(__('Quantity'));
+        } else {
+            return Forms\Components\TextInput::make('quantity')
+            ->autofocus()
+            ->numeric()
+            ->inputMode('decimal')
+            ->minValue(1)
+            ->nullable(false)
+            ->placeholder(__('Added Quantity'))
+            ->label(__('Quantityyyy'));
+        }
+    }
 }
