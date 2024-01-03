@@ -50,6 +50,7 @@ class BranchResource extends Resource
                     ->required()
                     ->maxLength(255)
                     ->placeholder(__('Branch Location'))
+                    ->suffixIcon('heroicon-m-globe-alt')
                     ->url()
                     ->label(__('Location')),
                 Forms\Components\Select::make('manager_id')

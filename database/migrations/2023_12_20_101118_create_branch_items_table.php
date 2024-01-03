@@ -17,6 +17,7 @@ return new class extends Migration
             $table->foreignId("branch_id")->constrained("branches")->cascadeOnDelete();
             $table->foreignId("item_id")->constrained("items")->cascadeOnDelete();
             $table->integer("quantity")->default(0);
+            $table->integer("o_quantity")->default(0)->nullable;
         });
     }
 

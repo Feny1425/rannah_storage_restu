@@ -63,6 +63,12 @@ class UserSeeder extends Seeder
             'email' => 'SYSTEM@eny.sa',
             'password' => bcrypt((string)Str::uuid()),
         ]);
+        $receiverRole = User::create([
+            'name' => 'Receiver User',
+            'email' => 'email@email.com',
+            'branch_id' => 1,
+            'password' => bcrypt('1'),
+        ]);
 
         // assign permissions to roles
         // $superAdminRole->givePermissionTo(Permission::where('guard_name', 'web')->get()); // no need for this since we will use has super admin trait on User model
