@@ -79,6 +79,9 @@ class UserSeeder extends Seeder
             ->givePermissionTo('view-any BranchMeal')
             ->givePermissionTo('update User');
 
+        $receiverRole
+            ->givePermissionTo('update BranchItem');
+
         // assign roles to users
         $superAdminUser->assignRole($superAdminRole);
         $systemUser->assignRole($systemRole);

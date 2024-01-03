@@ -8,7 +8,9 @@ use App\Filament\Resources\BranchItemResource\RelationManagers;
 use App\Models\Stockables\BranchItem;
 use Auth;
 use Filament\Forms;
+use Filament\Forms\Components\KeyValue;
 use Filament\Forms\Form;
+use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -28,7 +30,7 @@ class BranchItemResource extends Resource
         $user = Auth::user();
         return !($user->hasRole(RoleEnum::SUPER_ADMIN)||($user->hasRole(RoleEnum::OWNER)));
     }
-    public static function canEdit(Model $record): bool
+    public static function canView(Model $record): bool
     {
         return true;
     }
@@ -47,17 +49,16 @@ class BranchItemResource extends Resource
     public static function form(Form $form): Form
     {
         return $form
-            ->schema([
-                Forms\Components\TextInput::make('o_quantity')
+            ->schema([ 
+                Forms\Components\TextInput::make('quantity')
                     ->autofocus()
                     ->numeric()
                     ->inputMode('decimal')
-                    ->after(function (Livewire $livewire, Get $get, Set $set) {
-                        $set('quantity', $get('quantity')+$get('o_quantity'));
-                        $set('o_quantity', 0);
-                    })
-                    ->placeholder(__('Quantity'))
+                    ->minValue(1)
+                    ->nullable(false)
+                    ->placeholder(__('Added Quantity'))
                     ->label(__('Quantity')),
+                    
             ]);
     }
 
@@ -108,4 +109,5 @@ class BranchItemResource extends Resource
             'edit' => Pages\EditBranchItem::route('/{record}/edit'),
         ];
     }
+    
 }
