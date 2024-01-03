@@ -10,7 +10,6 @@ use Illuminate\Database\Eloquent\Model;
 class DecreaseBranchItem extends EditRecord
 {
     protected static string $resource = BranchItemResource::class;
-    protected static ?string $title = "decrease";
     protected function getHeaderActions(): array
     {
         return [
@@ -26,7 +25,7 @@ class DecreaseBranchItem extends EditRecord
     }
     protected function handleRecordUpdate(Model $record, array $data): Model
     {
-        $data['quantity'] = $data['quantity'] - $record['quantity'];
+        $data['quantity'] = $record['quantity'] - $data['quantity'];
         $record->update($data);
         
         return $record;

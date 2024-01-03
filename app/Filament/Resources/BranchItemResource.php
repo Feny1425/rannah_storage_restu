@@ -8,6 +8,7 @@ use App\Filament\Resources\BranchItemResource\RelationManagers;
 use App\Models\Stockables\BranchItem;
 use Auth;
 use Filament\Forms;
+use Filament\Forms\Components\Component;
 use Filament\Forms\Components\KeyValue;
 use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
@@ -20,15 +21,17 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Forms\Get;
 use Filament\Forms\Set;
 use Livewire\Component as Livewire;
+
 class BranchItemResource extends Resource
 {
     protected static ?string $model = BranchItem::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
-    public static function canViewAny(): bool{
+    public static function canViewAny(): bool
+    {
         $user = Auth::user();
-        return !($user->hasRole(RoleEnum::SUPER_ADMIN)||($user->hasRole(RoleEnum::OWNER)));
+        return !($user->hasRole(RoleEnum::SUPER_ADMIN) || ($user->hasRole(RoleEnum::OWNER)));
     }
     public static function canView(Model $record): bool
     {
@@ -38,7 +41,6 @@ class BranchItemResource extends Resource
     {
         $base = parent::getEloquentQuery();
         $user = Auth::user();
-
         if ($user->hasRole(RoleEnum::SUPER_ADMIN)) {
             return $base;
         }
@@ -49,23 +51,23 @@ class BranchItemResource extends Resource
     public static function form(Form $form): Form
     {
         return $form
-        ->schema([
-            // Some fields here
-            self::getShipmentField($form->getOperation()),
-            // Other fields there
-        ]);
-            ;
+            ->schema([
+                // Some fields here
+                self::getShipmentField($form->getOperation()),
+                // Other fields there
+            ]);
+        ;
     }
 
     public static function table(Table $table): Table
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('item.'.__('name_en'))
+                Tables\Columns\TextColumn::make('item.' . __('name_en'))
                     ->label(__('Name'))
                     ->searchable()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('item.'.__('unit_en'))
+                Tables\Columns\TextColumn::make('item.' . __('unit_en'))
                     ->label(__('Unit'))
                     ->searchable()
                     ->sortable(),
@@ -79,9 +81,11 @@ class BranchItemResource extends Resource
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\EditAction::make(),
-            ])
+                Tables\Actions\EditAction::make('add'),
+                Tables\Actions\Action::make('decrease')
+                ->url(fn (BranchItem $record): string => BranchItemResource::getUrl('decrease', ['record' => $record]))
+                
+                ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
@@ -120,13 +124,19 @@ class BranchItemResource extends Resource
                     ->label(__('Quantity'));
         } else {
             return Forms\Components\TextInput::make('quantity')
-            ->autofocus()
-            ->numeric()
-            ->inputMode('decimal')
-            ->minValue(1)
-            ->nullable(false)
-            ->placeholder(__('Added Quantity'))
-            ->label(__('Quantityyyy'));
+                ->autofocus()
+                ->numeric()
+                ->inputMode('decimal')
+                ->minValue(1)
+                ->nullable(false)
+                ->placeholder(__('Removed Quantity'))
+                ->label(__('Quantity'));
         }
+    }
+    public static function getLabel(): string{
+        return __('Item');
+    }
+    public static function getPluralLabel(): string{
+        return __('Items');
     }
 }
