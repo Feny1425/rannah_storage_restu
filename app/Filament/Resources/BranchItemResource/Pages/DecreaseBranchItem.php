@@ -19,6 +19,7 @@ class DecreaseBranchItem extends EditRecord
     }
     protected function mutateFormDataBeforeFill(array $data): array
     {
+        $data['max'] = $data['quantity'];
         $data['quantity'] = '';
      
         return $data;

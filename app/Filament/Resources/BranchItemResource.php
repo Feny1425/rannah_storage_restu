@@ -25,7 +25,6 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Forms\Get;
-use Filament\Forms\Set;
 use Livewire\Component as Livewire;
 use Request;
 
@@ -157,6 +156,10 @@ class BranchItemResource extends Resource
                 ->numeric()
                 ->inputMode('decimal')
                 ->minValue(1)
+                ->maxValue(function(Get $get):int{
+                    $max = $get('max');
+                    return (int) $max;
+                })
                 ->nullable(false)
                 ->placeholder(__('Removed Quantity'))
                 ->label(__('Quantity'));
