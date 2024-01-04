@@ -10,7 +10,6 @@ use Illuminate\Database\Eloquent\Model;
 class EditBranchItem extends EditRecord
 {
     protected static string $resource = BranchItemResource::class;
-    protected static ?string $title = "add";
     protected function getHeaderActions(): array
     {
         return [

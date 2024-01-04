@@ -2,18 +2,24 @@
 
 namespace App\Filament\Resources;
 
+use App\Enums\Food;
 use App\Enums\RoleEnum;
 use App\Filament\Resources\BranchItemResource\Pages;
 use App\Filament\Resources\BranchItemResource\RelationManagers;
+use App\Models\Item;
 use App\Models\Stockables\BranchItem;
 use Auth;
 use Filament\Forms;
 use Filament\Forms\Components\Component;
 use Filament\Forms\Components\KeyValue;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Filters\SelectFilter;
+use Filament\Tables\Filters\TernaryFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
@@ -21,6 +27,7 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Forms\Get;
 use Filament\Forms\Set;
 use Livewire\Component as Livewire;
+use Request;
 
 class BranchItemResource extends Resource
 {
@@ -45,7 +52,15 @@ class BranchItemResource extends Resource
             return $base;
         }
 
-        return $base->where('branch_id', $user->branch_id);
+        $query = $base->where('branch_id', $user->branch_id);
+
+        $filterValue = Request::input('filters.type');
+
+        if ($filterValue) {
+            // When a type filter is selected, only filter 'BranchItem'
+            $query->where('type', $filterValue);
+        }
+        return $query;    
     }
 
     public static function form(Form $form): Form
@@ -75,22 +90,26 @@ class BranchItemResource extends Resource
                     ->label(__('Quantity'))
                     ->searchable()
                     ->sortable(),
+                Tables\Columns\TextColumn::make('type')
+                    ->label(__('Type'))
+                    ->searchable(),
             ])
             ->filters([
-                //
+                SelectFilter::make('type')
+                ->options(Food::class)
+                ->label(__('Filter by Type')),
             ])
+                                  
             ->actions([
-                Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make('add'),
-                Tables\Actions\Action::make('decrease')
-                ->url(fn (BranchItem $record): string => BranchItemResource::getUrl('decrease', ['record' => $record]))
-                
+                    Tables\Actions\ViewAction::make(),
+                    Tables\Actions\Action::make(__('add'))
+                        ->url(fn(BranchItem $record): string => BranchItemResource::getUrl('add', ['record' => $record])),
+                    Tables\Actions\Action::make(__('decrease'))
+                        ->url(fn(BranchItem $record): string => BranchItemResource::getUrl('decrease', ['record' => $record]))
+
                 ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
-            ]);
+                ]);
     }
 
     public static function getRelations(): array
@@ -106,7 +125,7 @@ class BranchItemResource extends Resource
             'index' => Pages\ListBranchItems::route('/'),
             'create' => Pages\CreateBranchItem::route('/create'),
             'view' => Pages\ViewBranchItem::route('/{record}'),
-            'edit' => Pages\EditBranchItem::route('/{record}/add'),
+            'add' => Pages\EditBranchItem::route('/{record}/add'),
             'decrease' => Pages\DecreaseBranchItem::route('/{record}/decrease'),
         ];
     }
@@ -133,10 +152,12 @@ class BranchItemResource extends Resource
                 ->label(__('Quantity'));
         }
     }
-    public static function getLabel(): string{
+    public static function getLabel(): string
+    {
         return __('Item');
     }
-    public static function getPluralLabel(): string{
+    public static function getPluralLabel(): string
+    {
         return __('Items');
     }
 }

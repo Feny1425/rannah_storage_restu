@@ -6,6 +6,7 @@ use App\Enums\Food;
 use App\Models\BaseModels\BaseModel;
 use App\Models\Stockables\BranchItem;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Item extends BaseModel
 {
@@ -13,6 +14,10 @@ class Item extends BaseModel
     protected $casts = [
         'type' =>  Food::class,
     ];
+    public function branchItem(): HasMany
+    {
+        return $this->hasMany(BranchItem::class);
+    }
     protected static function booted(): void
     {
         static::created(function ($item) {
