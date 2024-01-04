@@ -96,9 +96,26 @@ class BranchItemResource extends Resource
             ->actions([
                     Tables\Actions\ViewAction::make(),
                     Tables\Actions\Action::make(__('add'))
-                        ->url(fn(BranchItem $record): string => BranchItemResource::getUrl('add', ['record' => $record])),
-                    Tables\Actions\Action::make(__('decrease'))
+                        ->url(fn(BranchItem $record): string => BranchItemResource::getUrl('add', ['record' => $record]))
+                        ->hidden(function () {
+                            $user = Auth::user();
+                            return $user->hasRole(RoleEnum::DISPATCHER);
+                        })
+                        ->visible(function () {
+                            $user = Auth::user();
+                            return !$user->hasRole(RoleEnum::DISPATCHER) || $user->hasRole(RoleEnum::RECEIVER);
+                        }),
+                    Tables\Actions\Action::make(__('dispatch'))
                         ->url(fn(BranchItem $record): string => BranchItemResource::getUrl('decrease', ['record' => $record]))
+                        ->hidden(function () {
+                            $user = Auth::user();
+                            return $user->hasRole(RoleEnum::RECEIVER);
+                        })
+                        ->visible(function () {
+                            $user = Auth::user();
+                            return !$user->hasRole(RoleEnum::RECEIVER) || $user->hasRole(RoleEnum::DISPATCHER);
+                        })
+
 
                 ])
             ->bulkActions([
@@ -147,7 +164,7 @@ class BranchItemResource extends Resource
     }
     public static function getLabel(): string
     {
-        return __('Item');
+        return __('Quantity');
     }
     public static function getPluralLabel(): string
     {

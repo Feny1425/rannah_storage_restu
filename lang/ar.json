@@ -18,8 +18,9 @@
     "unit_en": "unit",
     "hour": "ساعة",
     "Added Quantity":"الكمية المضافة",
+    "Removed Quantity":"الكمية المخرجة",
     "add":"إضافة",
-    "decrease":"إخراج",
+    "dispatch":"إخراج",
 
 
     "Branch Location": "موقع الفرع",

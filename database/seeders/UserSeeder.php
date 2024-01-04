@@ -53,7 +53,7 @@ class UserSeeder extends Seeder
         ]);
 
         // users
-        $superAdminUser = User::create([
+        $admin = User::create([
             'name' => 'Super User',
             'email' => 'admin@admin.com',
             'password' => bcrypt('1'),
@@ -63,7 +63,7 @@ class UserSeeder extends Seeder
             'email' => 'SYSTEM@eny.sa',
             'password' => bcrypt((string)Str::uuid()),
         ]);
-        $receiverRole = User::create([
+        $receiverUser = User::create([
             'name' => 'Receiver User',
             'email' => 'email@email.com',
             'branch_id' => 1,
@@ -82,8 +82,12 @@ class UserSeeder extends Seeder
         $receiverRole
             ->givePermissionTo('update BranchItem');
 
+        $dispatcherRole
+            ->givePermissionTo('update BranchItem');
+
         // assign roles to users
-        $superAdminUser->assignRole($superAdminRole);
+        $admin->assignRole($superAdminRole);
         $systemUser->assignRole($systemRole);
+        $receiverUser->assignRole($dispatcherRole);
     }
 }
