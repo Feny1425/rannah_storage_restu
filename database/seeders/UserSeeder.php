@@ -83,6 +83,5 @@ class UserSeeder extends Seeder
         // assign roles to users
         $admin->assignRole($superAdminRole);
         $systemUser->assignRole($systemRole);
-        $receiverUser->assignRole($dispatcherRole);
     }
 }
