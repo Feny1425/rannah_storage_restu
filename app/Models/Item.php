@@ -18,6 +18,7 @@ class Item extends BaseModel
     {
         return $this->hasMany(BranchItem::class);
     }
+
     protected static function booted(): void
     {
         static::created(function ($item) {
@@ -26,7 +27,8 @@ class Item extends BaseModel
                 BranchItem::firstOrCreate([
                     'branch_id' => $branch->id,
                     'item_id' => $item->id,
-                    'quantity' => 0
+                    'quantity' => 0,
+                    'typeI' => $item->type,
                 ]);
             }
         });

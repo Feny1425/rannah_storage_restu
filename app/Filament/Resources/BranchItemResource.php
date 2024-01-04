@@ -54,12 +54,6 @@ class BranchItemResource extends Resource
 
         $query = $base->where('branch_id', $user->branch_id);
 
-        $filterValue = Request::input('filters.type');
-
-        if ($filterValue) {
-            // When a type filter is selected, only filter 'BranchItem'
-            $query->where('type', $filterValue);
-        }
         return $query;    
     }
 
@@ -90,14 +84,13 @@ class BranchItemResource extends Resource
                     ->label(__('Quantity'))
                     ->searchable()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('type')
+                Tables\Columns\TextColumn::make('typeI')
                     ->label(__('Type'))
-                    ->searchable(),
             ])
             ->filters([
-                SelectFilter::make('type')
+                SelectFilter::make('typeI')
                 ->options(Food::class)
-                ->label(__('Filter by Type')),
+                ->label(__('Type')),
             ])
                                   
             ->actions([
