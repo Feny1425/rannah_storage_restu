@@ -1,13 +1,16 @@
 <?php
+
 namespace App\Enums;
+
 use Filament\Support\Contracts\HasIcon;
 use Filament\Support\Contracts\HasLabel;
 use Filament\Support\Contracts\HasColor;
- 
-enum Food: string implements HasLabel, HasColor, HasIcon{
+
+enum ItemTypeEnum: string implements HasLabel, HasColor, HasIcon
+{
     case FOOD = 'food';
     case SUPPLIES = 'supplies';
- 
+
     public function getLabel(): ?string
     {
         return match ($this) {
@@ -15,7 +18,7 @@ enum Food: string implements HasLabel, HasColor, HasIcon{
             self::SUPPLIES => __('supplies'),
         };
     }
- 
+
     public function getColor(): string|array|null
     {
         return match ($this) {
@@ -23,7 +26,7 @@ enum Food: string implements HasLabel, HasColor, HasIcon{
             self::SUPPLIES => 'gray',
         };
     }
- 
+
     public function getIcon(): ?string
     {
         return match ($this) {

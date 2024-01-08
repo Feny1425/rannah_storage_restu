@@ -2,7 +2,7 @@
 
 namespace App\Filament\Resources;
 
-use App\Enums\Food;
+use App\Enums\ItemTypeEnum;
 use App\Enums\RoleEnum;
 use App\Filament\Resources\BranchItemResource\Pages;
 use App\Filament\Resources\BranchItemResource\RelationManagers;
@@ -89,10 +89,7 @@ class BranchItemResource extends Resource
             ])
             ->filters([
                 SelectFilter::make('item_type')
-                    ->options([
-                        'food' => __('Food'),
-                        'supplies' => __('Supplies'),
-                    ])
+                    ->options(ItemTypeEnum::class)
                     ->query(function (Builder $query, $data) {
                         $value = $data['value'];
                         if ($value === null) {

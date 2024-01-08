@@ -86,7 +86,7 @@ namespace App\Models{
  * @property string $name_en
  * @property string $unit
  * @property string $unit_en
- * @property \App\Enums\Food $type
+ * @property \App\Enums\ItemTypeEnum $type
  * @method static \Illuminate\Database\Eloquent\Builder|Item newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Item newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Item query()

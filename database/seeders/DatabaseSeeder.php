@@ -3,7 +3,7 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-use App\Enums\Food;
+use App\Enums\ItemTypeEnum;
 use App\Models\Branch;
 use App\Models\Item;
 use App\Models\Meal;
