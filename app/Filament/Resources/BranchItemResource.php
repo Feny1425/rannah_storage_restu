@@ -39,10 +39,12 @@ class BranchItemResource extends Resource
         $user = Auth::user();
         return !($user->hasRole(RoleEnum::SUPER_ADMIN) || ($user->hasRole(RoleEnum::OWNER)));
     }
+
     public static function canView(Model $record): bool
     {
         return true;
     }
+
     public static function getEloquentQuery(): Builder
     {
         $base = parent::getEloquentQuery();
@@ -53,7 +55,7 @@ class BranchItemResource extends Resource
 
         $query = $base->where('branch_id', $user->branch_id);
 
-        return $query;    
+        return $query;
     }
 
     public static function form(Form $form): Form
@@ -63,8 +65,7 @@ class BranchItemResource extends Resource
                 // Some fields here
                 self::getShipmentField($form->getOperation()),
                 // Other fields there
-            ]);
-        ;
+            ]);;
     }
 
     public static function table(Table $table): Table
@@ -83,42 +84,53 @@ class BranchItemResource extends Resource
                     ->label(__('Quantity'))
                     ->searchable()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('typeI')
-                    ->label(__('Type'))
+                // Tables\Columns\TextColumn::make('typeI')
+                //     ->label(__('Type'))
             ])
             ->filters([
-                SelectFilter::make('typeI')
-                ->options(Food::class)
-                ->label(__('Type')),
+                SelectFilter::make('item_type')
+                    ->options([
+                        'food' => __('Food'),
+                        'supplies' => __('Supplies'),
+                    ])
+                    ->query(function (Builder $query, $data) {
+                        $value = $data['value'];
+                        if ($value === null) {
+                            return $query;
+                        }
+                        $query->whereHas('item', function (Builder $query) use ($value) {
+                            $query->where('type', $value);
+                        });
+                    })
+                    ->label(__('Type')),
             ])
-                                  
             ->actions([
-                    Tables\Actions\ViewAction::make(),
-                    Tables\Actions\Action::make(__('add'))
-                        ->url(fn(BranchItem $record): string => BranchItemResource::getUrl('add', ['record' => $record]))
-                        ->hidden(function () {
-                            $user = Auth::user();
-                            return $user->hasRole(RoleEnum::DISPATCHER);
-                        })
-                        ->visible(function () {
-                            $user = Auth::user();
-                            return !$user->hasRole(RoleEnum::DISPATCHER) || $user->hasRole(RoleEnum::RECEIVER);
-                        }),
-                    Tables\Actions\Action::make(__('dispatch'))
-                        ->url(fn(BranchItem $record): string => BranchItemResource::getUrl('decrease', ['record' => $record]))
-                        ->hidden(function () {
-                            $user = Auth::user();
-                            return $user->hasRole(RoleEnum::RECEIVER);
-                        })
-                        ->visible(function () {
-                            $user = Auth::user();
-                            return !$user->hasRole(RoleEnum::RECEIVER) || $user->hasRole(RoleEnum::DISPATCHER);
-                        })
+                Tables\Actions\ViewAction::make(),
+                Tables\Actions\Action::make(__('add'))
+                    ->url(fn(BranchItem $record): string => BranchItemResource::getUrl('add', ['record' => $record]))
+                    ->hidden(function () {
+                        $user = Auth::user();
+                        return $user->hasRole(RoleEnum::DISPATCHER);
+                    })
+                    ->visible(function () {
+                        $user = Auth::user();
+                        return !$user->hasRole(RoleEnum::DISPATCHER) || $user->hasRole(RoleEnum::RECEIVER);
+                    }),
+                Tables\Actions\Action::make(__('dispatch'))
+                    ->url(fn(BranchItem $record): string => BranchItemResource::getUrl('decrease', ['record' => $record]))
+                    ->hidden(function () {
+                        $user = Auth::user();
+                        return $user->hasRole(RoleEnum::RECEIVER);
+                    })
+                    ->visible(function () {
+                        $user = Auth::user();
+                        return !$user->hasRole(RoleEnum::RECEIVER) || $user->hasRole(RoleEnum::DISPATCHER);
+                    })
 
 
-                ])
+            ])
             ->bulkActions([
-                ]);
+            ]);
     }
 
     public static function getRelations(): array
@@ -138,6 +150,7 @@ class BranchItemResource extends Resource
             'decrease' => Pages\DecreaseBranchItem::route('/{record}/decrease'),
         ];
     }
+
     protected static function getShipmentField(string $operation)
     {
         if ($operation === 'edit') {
@@ -156,19 +169,21 @@ class BranchItemResource extends Resource
                 ->numeric()
                 ->inputMode('decimal')
                 ->minValue(1)
-                ->maxValue(function(Get $get):int{
+                ->maxValue(function (Get $get): int {
                     $max = $get('max');
-                    return (int) $max;
+                    return (int)$max;
                 })
                 ->nullable(false)
                 ->placeholder(__('Removed Quantity'))
                 ->label(__('Quantity'));
         }
     }
+
     public static function getLabel(): string
     {
         return __('Quantity');
     }
+
     public static function getPluralLabel(): string
     {
         return __('Items');

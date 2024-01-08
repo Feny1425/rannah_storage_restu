@@ -11,9 +11,10 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Item extends BaseModel
 {
     use HasFactory;
-    protected $casts = [
-        'type' =>  Food::class,
-    ];
+
+    // protected $casts = [
+    //     'type' => Food::class,
+    // ];
     public function branchItem(): HasMany
     {
         return $this->hasMany(BranchItem::class);
@@ -28,7 +29,7 @@ class Item extends BaseModel
                     'branch_id' => $branch->id,
                     'item_id' => $item->id,
                     'quantity' => 0,
-                    'typeI' => $item->type,
+                    // 'typeI' => $item->type,
                 ]);
             }
         });

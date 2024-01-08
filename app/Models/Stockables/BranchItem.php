@@ -13,17 +13,18 @@ use Request;
 class BranchItem extends Stockable
 {
     use HasFactory;
+
     protected $casts = [
-        'typeI' =>  Food::class,
+        // 'typeI' =>  Food::class,
     ];
-    
+
     public function branch(): BelongsTo
     {
         return $this->belongsTo(Branch::class);
     }
-    
+
     // Example filtering logic in your controller or where the filtering is applied
-    
+
 
     public function item(): BelongsTo
     {
