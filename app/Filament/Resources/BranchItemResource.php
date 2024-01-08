@@ -84,8 +84,10 @@ class BranchItemResource extends Resource
                     ->label(__('Quantity'))
                     ->searchable()
                     ->sortable(),
-                // Tables\Columns\TextColumn::make('typeI')
-                //     ->label(__('Type'))
+                Tables\Columns\TextColumn::make('item.type')
+                    ->searchable()
+                    ->label(__('Type'))
+                    ->badge('')
             ])
             ->filters([
                 SelectFilter::make('item_type')

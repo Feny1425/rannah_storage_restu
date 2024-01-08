@@ -24,7 +24,6 @@ class ItemResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-squares-plus';
 
 
-
     public static function form(Form $form): Form
     {
         return $form
@@ -116,7 +115,7 @@ class ItemResource extends Resource
         return __('Item');
     }
 
-    public static function getpluralLabel(): string
+    public static function getPluralLabel(): string
     {
         return __('Items');
     }
