@@ -113,7 +113,7 @@ class BranchItemResource extends Resource
                     })
                     ->visible(function () {
                         $user = Auth::user();
-                        return !$user->hasRole(RoleEnum::DISPATCHER) || $user->hasRole(RoleEnum::RECEIVER);
+                        return $user->hasRole(RoleEnum::RECEIVER);
                     }),
                 Tables\Actions\Action::make(__('dispatch'))
                     ->url(fn(BranchItem $record): string => BranchItemResource::getUrl('decrease', ['record' => $record]))
@@ -123,7 +123,7 @@ class BranchItemResource extends Resource
                     })
                     ->visible(function () {
                         $user = Auth::user();
-                        return !$user->hasRole(RoleEnum::RECEIVER) || $user->hasRole(RoleEnum::DISPATCHER);
+                        return $user->hasRole(RoleEnum::DISPATCHER);
                     })
 
 
