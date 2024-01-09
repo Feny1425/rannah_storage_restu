@@ -109,7 +109,7 @@ class BranchItemResource extends Resource
                     ->url(fn(BranchItem $record): string => BranchItemResource::getUrl('add', ['record' => $record]))
                     ->hidden(function () {
                         $user = Auth::user();
-                        return $user->hasRole(RoleEnum::DISPATCHER);
+                        return !$user->hasRole(RoleEnum::RECEIVER);
                     })
                     ->visible(function () {
                         $user = Auth::user();
@@ -119,7 +119,7 @@ class BranchItemResource extends Resource
                     ->url(fn(BranchItem $record): string => BranchItemResource::getUrl('decrease', ['record' => $record]))
                     ->hidden(function () {
                         $user = Auth::user();
-                        return $user->hasRole(RoleEnum::RECEIVER);
+                        return !$user->hasRole(RoleEnum::DISPATCHER);
                     })
                     ->visible(function () {
                         $user = Auth::user();
