@@ -77,6 +77,31 @@ namespace App\Models{
 
 namespace App\Models{
 /**
+ * App\Models\BranchItem
+ *
+ * @property int $id
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property int $branch_id
+ * @property int $item_id
+ * @property int $quantity
+ * @property-read \App\Models\Branch $branch
+ * @property-read \App\Models\Item $item
+ * @method static \Illuminate\Database\Eloquent\Builder|BranchItem newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|BranchItem newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|BranchItem query()
+ * @method static \Illuminate\Database\Eloquent\Builder|BranchItem whereBranchId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|BranchItem whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|BranchItem whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|BranchItem whereItemId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|BranchItem whereQuantity($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|BranchItem whereUpdatedAt($value)
+ */
+	class BranchItem extends \Eloquent {}
+}
+
+namespace App\Models{
+/**
  * App\Models\Item
  *
  * @property int $id
@@ -87,6 +112,8 @@ namespace App\Models{
  * @property string $unit
  * @property string $unit_en
  * @property \App\Enums\ItemTypeEnum $type
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Stockables\BranchItem> $branchItem
+ * @property-read int|null $branch_item_count
  * @method static \Illuminate\Database\Eloquent\Builder|Item newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Item newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Item query()
@@ -169,9 +196,9 @@ namespace App\Models{
  * @property string $guard_name
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Permission\Models\Permission> $permissions
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, Permission> $permissions
  * @property-read int|null $permissions_count
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Permission\Models\Role> $roles
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Role> $roles
  * @property-read int|null $roles_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\User> $users
  * @property-read int|null $users_count
@@ -240,26 +267,6 @@ namespace App\Models\Recordables{
 
 namespace App\Models\Recordables{
 /**
- * App\Models\Recordables\QuantityEditRecord
- *
- * @property int $id
- * @property int $record_id
- * @property int $old_quantity
- * @property int $new_quantity
- * @property-read \App\Models\Recordables\Record|null $record
- * @method static \Illuminate\Database\Eloquent\Builder|QuantityEditRecord newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|QuantityEditRecord newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|QuantityEditRecord query()
- * @method static \Illuminate\Database\Eloquent\Builder|QuantityEditRecord whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|QuantityEditRecord whereNewQuantity($value)
- * @method static \Illuminate\Database\Eloquent\Builder|QuantityEditRecord whereOldQuantity($value)
- * @method static \Illuminate\Database\Eloquent\Builder|QuantityEditRecord whereRecordId($value)
- */
-	class QuantityEditRecord extends \Eloquent {}
-}
-
-namespace App\Models\Recordables{
-/**
  * App\Models\Recordables\Record
  *
  * @property-read Recordable $recordable
@@ -273,6 +280,8 @@ namespace App\Models\Recordables{
  * @property int|null $stockable_id
  * @property string|null $stockable_type
  * @property int|null $stockable_quantity
+ * @property int|null $stockable_old_quantity
+ * @property int|null $stockable_new_quantity
  * @property-read \App\Models\Branch $branch
  * @property-read \App\Models\User $user
  * @method static \Illuminate\Database\Eloquent\Builder|Record newModelQuery()
@@ -284,6 +293,8 @@ namespace App\Models\Recordables{
  * @method static \Illuminate\Database\Eloquent\Builder|Record whereRecordableId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Record whereRecordableType($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Record whereStockableId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Record whereStockableNewQuantity($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Record whereStockableOldQuantity($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Record whereStockableQuantity($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Record whereStockableType($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Record whereUserId($value)
@@ -300,7 +311,7 @@ namespace App\Models{
  * @property string $guard_name
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Permission\Models\Permission> $permissions
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Permission> $permissions
  * @property-read int|null $permissions_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\User> $users
  * @property-read int|null $users_count
@@ -376,19 +387,19 @@ namespace App\Models{
  * @property string|null $remember_token
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property int|null $branch_id
  * @property string $name
  * @property string $email
  * @property \Illuminate\Support\Carbon|null $email_verified_at
  * @property mixed $password
+ * @property int|null $branch_id
  * @property-read \App\Models\Branch|null $branch
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Branch> $managedBranches
  * @property-read int|null $managed_branches_count
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection<int, \Illuminate\Notifications\DatabaseNotification> $notifications
  * @property-read int|null $notifications_count
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Permission\Models\Permission> $permissions
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Permission> $permissions
  * @property-read int|null $permissions_count
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Permission\Models\Role> $roles
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Role> $roles
  * @property-read int|null $roles_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \Laravel\Sanctum\PersonalAccessToken> $tokens
  * @property-read int|null $tokens_count

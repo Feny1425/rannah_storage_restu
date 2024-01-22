@@ -23,6 +23,8 @@ return new class extends Migration {
             $table->foreignId('stockable_id')->nullable();
             $table->string('stockable_type')->nullable();
             $table->integer('stockable_quantity')->nullable();
+            $table->integer('stockable_old_quantity')->nullable();
+            $table->integer('stockable_new_quantity')->nullable();
         });
     }
 
