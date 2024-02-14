@@ -104,4 +104,15 @@ class BranchMealResource extends Resource
             'edit' => Pages\EditBranchMeal::route('/{record}/edit'),
         ];
     }
+    
+    public static function getPluralLabel(): string
+    {
+        $user = Auth::user();
+        if($user->hasRole(RoleEnum::DISPATCHER)){
+            return __('Meals');
+        }
+        else{
+            return __('Close');
+        }
+    }
 }
