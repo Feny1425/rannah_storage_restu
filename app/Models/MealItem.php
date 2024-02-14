@@ -12,7 +12,7 @@ class MealItem extends BaseModel
 
     public function meal(): BelongsTo
     {
-        return $this->belongsTo(Meal::class);
+        return $this->belongsTo(Meal::class,"meal_id");
     }
 
     public function item(): BelongsTo

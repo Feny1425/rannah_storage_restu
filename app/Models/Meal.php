@@ -13,7 +13,7 @@ class Meal extends BaseModel
 
     public function meal_items(): HasMany
     {
-        return $this->hasMany(MealItem::class);
+        return $this->hasMany(MealItem::class,"meal_id");
     }
 
     protected static function booted(): void
