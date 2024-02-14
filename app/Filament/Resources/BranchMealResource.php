@@ -20,14 +20,15 @@ class BranchMealResource extends Resource
 {
     protected static ?string $model = BranchMeal::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $activeNavigationIcon = 'heroicon-s-cake';
+    protected static ?string $navigationIcon = 'heroicon-o-cake';
 
     public static function canViewAny(): bool
     {
         $user = Auth::user();
         return !($user->hasRole(RoleEnum::SUPER_ADMIN) || ($user->hasRole(RoleEnum::OWNER)));
     }
-    
+
     public static function getEloquentQuery(): Builder
     {
         $base = parent::getEloquentQuery();
@@ -38,6 +39,9 @@ class BranchMealResource extends Resource
 
         $query = $base->where('branch_id', $user->branch_id);
 
+        if ($user->hasRole(RoleEnum::CASHIER)) {
+            $query = $query->whereNot('quantity', 0);
+        }
         return $query;
     }
     public static function form(Form $form): Form
@@ -45,17 +49,18 @@ class BranchMealResource extends Resource
         return $form
             ->schema([
                 Forms\Components\TextInput::make('quantity')
-                ->autofocus()
-                ->numeric()
-                ->inputMode('decimal')
-                ->maxValue(function (Get $get): int {
-                    $max = $get('max');
-                    return (int)$max;
-                })
-                ->minValue(1)
-                ->nullable(false)
-                ->placeholder(__('Added Quantity'))
-                ->label(__('Quantity'))
+                    ->autofocus()
+                    ->numeric()
+                    ->inputMode('decimal')
+                    ->maxValue(function (Get $get): int {
+                        $max = $get('max');
+                        return (int)$max;
+                    })
+                    ->minValue(1)
+                    ->nullable(false)
+                    ->placeholder(__('Added Quantity'))
+                    ->label(__('Quantity')),
+                self::getShipmentField($form->getOperation()),
             ]);
     }
 
@@ -63,19 +68,19 @@ class BranchMealResource extends Resource
     {
         return $table
             ->columns([
-            Tables\Columns\TextColumn::make('meal.' . __('name_en'))
-                ->label(__('Name'))
-                ->searchable()
-                ->sortable(),
-            Tables\Columns\TextColumn::make('meal.' . __('unit_en'))
-                ->label(__('Unit'))
-                ->searchable()
-                ->sortable(),
-            Tables\Columns\TextColumn::make('quantity')
-                ->label(__('Quantity'))
-                ->searchable()
-                ->sortable()
-        ])
+                Tables\Columns\TextColumn::make('meal.' . __('name_en'))
+                    ->label(__('Name'))
+                    ->searchable()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('meal.' . __('unit_en'))
+                    ->label(__('Unit'))
+                    ->searchable()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('quantity')
+                    ->label(__('Quantity'))
+                    ->searchable()
+                    ->sortable()
+            ])
             ->filters([
                 //
             ])
@@ -104,14 +109,21 @@ class BranchMealResource extends Resource
             'edit' => Pages\EditBranchMeal::route('/{record}/edit'),
         ];
     }
-    
+    protected static function getShipmentField(string $operation)
+    {
+        if ($operation === 'edit') {
+            return null;
+        } else {
+            return null /*here put close type (sold, spoild, etc...)*/;
+        }
+    }
+
     public static function getPluralLabel(): string
     {
         $user = Auth::user();
-        if($user->hasRole(RoleEnum::DISPATCHER)){
+        if ($user->hasRole(RoleEnum::DISPATCHER)) {
             return __('Meals');
-        }
-        else{
+        } else {
             return __('Close');
         }
     }
