@@ -48,21 +48,35 @@ class EditBranchMeal extends EditRecord
     }
     protected function handleRecordUpdate(Model $record, array $data): Model
     {
-        
+        //get branch id of meal branch
         $branch_id = $record->branch_id;
+        //get meal of meal branch
         $meal = $record->meal;
+        //get all emal items that belongs to the meal
         $meal_items = $meal->meal_items;
+
+        //for each meal item
         foreach ($meal_items as $meal_item){
+            //get item of meal item
             $item = $meal_item->item;
+            // get all branch items belong to this item
             $branch_items = $item->branchItem;
+
+            //for each branch item
             foreach($branch_items as $branch_item){
+
+                //check if this branch item belongs to the meal-branch branch 
                 if($branch_item->branch_id == $branch_id){
+
+                    //edit item branch quantity
                     $quantity = $branch_item->quantity - ($meal_item->quantity * $data['quantity']);
                     $branch_item->update(['quantity' => $quantity]);
                     break;
                 }
             }
         }
+
+        //edit meal branch quantity
         $data['quantity'] = $data['quantity'] + $record['quantity'];
         $record->update($data);
         return $record;
