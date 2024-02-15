@@ -27,14 +27,14 @@ class DecreaseBranchItem extends EditRecord
         //  static::$title     to get current title and set it.
         switch(app()->getLocale()){
             case "en":
-                static::$title = "Dispatch " . $item->name_en;
+                static::$t = "Dispatch " . $item->name_en;
                 break;
             case "ar":
-                static::$title = "إخراج " . $item->name;
+                static::$t = "إخراج " . $item->name;
                 break;
         }
 
-        
+
         $data['max'] = $data['quantity'];
         $data['quantity'] = '';
      
@@ -59,5 +59,12 @@ class DecreaseBranchItem extends EditRecord
                     ->inlineLabel($this->hasInlineLabels()),
             )),
         ];
+    }
+
+    
+    public static ?string $t = "sd";
+    public function getTitle(): string
+    {
+        return static::$t;
     }
 }

@@ -7,7 +7,7 @@ use App\Models\Stockables\BranchItem;
 use Filament\Actions;
 use Filament\Resources\Pages\ViewRecord;
 
-class ViewBranchItem extends ViewRecord
+class ViewBranchItem extends ViewRecord 
 {
     protected static string $resource = BranchItemResource::class;
 
@@ -26,12 +26,19 @@ class ViewBranchItem extends ViewRecord
         //  static::$title     to get current title and set it.
         switch(app()->getLocale()){
             case "en":
-                static::$title = "View " . $item->name_en;
+                static::$t = "View " . $item->name_en;
                 break;
             case "ar":
-                static::$title = "عرض " . $item->name;
+                static::$t = "عرض " . $item->name;
                 break;
         }
         return $data;
+    }
+
+    
+    public static ?string $t = "sd";
+    public function getTitle(): string
+    {
+        return static::$t;
     }
 }
