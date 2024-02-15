@@ -60,12 +60,9 @@ class EditBranchMeal extends EditRecord
         //get meal of meal branch
         $meal = $record->meal;
         static::editName($meal);
-
-
-
-        //get all emal items that belongs to the meal
+        //get all meal items that belongs to the meal
         $meal_items = $meal->meal_items;
-
+        
         //for each meal item
         foreach ($meal_items as $meal_item){
             //get item of meal item
