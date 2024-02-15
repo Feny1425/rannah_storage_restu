@@ -24,8 +24,7 @@ class MealItemsRelationManager extends RelationManager
                     ->required()
                     ->searchable()
                     ->preload()
-                    ->placeholder(__('Item'))
-                    ->unique(),
+                    ->placeholder(__('Item')),
                 Forms\Components\TextInput::make('quantity')
                     ->required()
                     ->type('number')

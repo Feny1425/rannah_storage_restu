@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use App;
 use App\Enums\RoleEnum;
 use App\Filament\Resources\BranchMealResource\Pages;
 use App\Filament\Resources\BranchMealResource\RelationManagers;
@@ -60,7 +61,7 @@ class BranchMealResource extends Resource
                     ->nullable(false)
                     ->placeholder(__('Added Quantity'))
                     ->label(__('Quantity')),
-                //self::getShipmentField($form->getOperation()),
+                self::getShipmentField($form->getOperation()),
             ]);
     }
 
@@ -112,9 +113,20 @@ class BranchMealResource extends Resource
     protected static function getShipmentField(string $operation)
     {
         if ($operation === 'edit') {
-            return null;
+            return Forms\Components\TextInput::make('id')->visible(false);
         } else {
-            return null /*here put close type (sold, spoild, etc...)*/;
+            return Forms\Components\TextInput::make('quantity')
+            ->autofocus()
+            ->numeric()
+            ->inputMode('decimal')
+            ->maxValue(function (Get $get): int {
+                $max = $get('max');
+                return (int)$max;
+            })
+            ->minValue(1)
+            ->nullable(false)
+            ->placeholder(__('Added Quantity'))
+            ->label(__('Type')) /*here put close type (sold, spoild, etc...)*/;
         }
     }
 

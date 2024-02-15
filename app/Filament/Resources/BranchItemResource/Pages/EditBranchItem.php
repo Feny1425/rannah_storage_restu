@@ -22,16 +22,7 @@ class EditBranchItem extends EditRecord
     {
         $record = BranchItem::find($data['id']);
         $item = $record->item;
-        //  app()->getLocale() to get current language.
-        //  static::$title     to get current title and set it.
-        switch(app()->getLocale()){
-            case "en":
-                static::$t = "Add " . $item->name_en;
-                break;
-            case "ar":
-                static::$t = "إضافة " . $item->name;
-                break;
-        }
+        static::editName($item);
         $data['quantity'] = '';
      
         return $data;
@@ -40,6 +31,8 @@ class EditBranchItem extends EditRecord
     {
         $data['quantity'] = $data['quantity'] + $record['quantity'];
         $record->update($data);
+        $item = $record->item;
+        static::editName($item);
         
         return $record;
     }
@@ -48,5 +41,15 @@ class EditBranchItem extends EditRecord
     public function getTitle(): string
     {
         return static::$t;
+    }
+    public static function editName($model){
+        switch(app()->getLocale()){
+            case "en":
+                static::$t = "Add " . $model->name_en;
+                break;
+            case "ar":
+                static::$t = "إضافة " . $model->name;
+                break;
+        }
     }
 }

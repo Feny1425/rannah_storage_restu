@@ -24,14 +24,7 @@ class ViewBranchItem extends ViewRecord
         
         //  app()->getLocale() to get current language.
         //  static::$title     to get current title and set it.
-        switch(app()->getLocale()){
-            case "en":
-                static::$t = "View " . $item->name_en;
-                break;
-            case "ar":
-                static::$t = "عرض " . $item->name;
-                break;
-        }
+        static::editName($item);
         return $data;
     }
 
@@ -40,5 +33,16 @@ class ViewBranchItem extends ViewRecord
     public function getTitle(): string
     {
         return static::$t;
+    }
+
+    public static function editName($model){
+        switch(app()->getLocale()){
+            case "en":
+                static::$t = "Cook " . $model->name_en;
+                break;
+            case "ar":
+                static::$t = "طبخ " . $model->name;
+                break;
+        }
     }
 }

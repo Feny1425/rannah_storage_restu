@@ -27,14 +27,8 @@ class EditBranchMeal extends EditRecord
 
         //  app()->getLocale() to get current language.
         //  static::$title     to get current title and set it.
-        switch(app()->getLocale()){
-            case "en":
-                static::$t = "Cook " . $meal->name_en;
-                break;
-            case "ar":
-                static::$t = "طبخ " . $meal->name;
-                break;
-        }
+        static::editName($meal);
+
 
 
         $meal_items = $meal->meal_items;
@@ -55,7 +49,7 @@ class EditBranchMeal extends EditRecord
         }
 
         $data['max'] = $max;
-        $data['quantity'] = 0;
+        $data['quantity'] = '';
     
         return $data;
     }
@@ -65,6 +59,10 @@ class EditBranchMeal extends EditRecord
         $branch_id = $record->branch_id;
         //get meal of meal branch
         $meal = $record->meal;
+        static::editName($meal);
+
+
+
         //get all emal items that belongs to the meal
         $meal_items = $meal->meal_items;
 
@@ -98,5 +96,16 @@ class EditBranchMeal extends EditRecord
     public function getTitle(): string
     {
         return static::$t;
+    }
+
+    public static function editName($model){
+        switch(app()->getLocale()){
+            case "en":
+                static::$t = "Cook " . $model->name_en;
+                break;
+            case "ar":
+                static::$t = "طبخ " . $model->name;
+                break;
+        }
     }
 }

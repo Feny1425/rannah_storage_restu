@@ -20,19 +20,10 @@ class DecreaseBranchItem extends EditRecord
     }
     protected function mutateFormDataBeforeFill(array $data): array
     {
+        
         $record = BranchItem::find($data['id']);
         $item = $record->item;
-        
-        //  app()->getLocale() to get current language.
-        //  static::$title     to get current title and set it.
-        switch(app()->getLocale()){
-            case "en":
-                static::$t = "Dispatch " . $item->name_en;
-                break;
-            case "ar":
-                static::$t = "إخراج " . $item->name;
-                break;
-        }
+        static::editName($item);
 
 
         $data['max'] = $data['quantity'];
@@ -44,6 +35,8 @@ class DecreaseBranchItem extends EditRecord
     {
         $data['quantity'] = $record['quantity'] - $data['quantity'];
         $record->update($data);
+        $item = $record->item;
+        static::editName($item);
         
         return $record;
     }
@@ -66,5 +59,15 @@ class DecreaseBranchItem extends EditRecord
     public function getTitle(): string
     {
         return static::$t;
+    }
+    public static function editName($model){
+        switch(app()->getLocale()){
+            case "en":
+                static::$t = "Dispatch " . $model->name_en;
+                break;
+            case "ar":
+                static::$t = "إخراج " . $model->name;
+                break;
+        }
     }
 }
