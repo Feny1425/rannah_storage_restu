@@ -68,6 +68,11 @@ class UserSeeder extends Seeder
             'email' => 'receiver@eny.sa',
             'password' => bcrypt('1'),
         ]);
+        $casheirUser = User::create([
+            'name' => 'Casheir',
+            'email' => 'casheir@eny.sa',
+            'password' => bcrypt('1'),
+        ]);
 
 
         // assign permissions to roles
@@ -83,11 +88,16 @@ class UserSeeder extends Seeder
             ->givePermissionTo('update BranchItem');
 
         $dispatcherRole
-            ->givePermissionTo('update BranchItem');
+            ->givePermissionTo('update BranchItem')
+            ->givePermissionTo('update BranchMeal');
 
+        $cashierRole
+            ->givePermissionTo('update BranchMeal');
+            
         // assign roles to users
         $admin->assignRole($superAdminRole);
         $systemUser->assignRole($systemRole);
         $receiverUser->assignRole($receiverRole);
+        $casheirUser->assignRole($cashierRole);
     }
 }
