@@ -24,6 +24,19 @@ class EditBranchMeal extends EditRecord
         $record = BranchMeal::find($data['id']);
         $branch_id = $record->branch_id;
         $meal = $record->meal;
+        
+        //  app()->getLocale() to get current language.
+        //  static::$title     to get current title and set it.
+        switch(app()->getLocale()){
+            case "en":
+                static::$title = "Cook " . $meal->name_en;
+                break;
+            case "ar":
+                static::$title = "طبخ " . $meal->name;
+                break;
+        }
+
+
         $meal_items = $meal->meal_items;
         $max = 99999999999;
         foreach ($meal_items as $meal_item){

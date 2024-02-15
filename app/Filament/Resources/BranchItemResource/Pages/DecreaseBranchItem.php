@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\BranchItemResource\Pages;
 
 use App\Filament\Resources\BranchItemResource;
+use App\Models\Stockables\BranchItem;
 use Filament\Actions;
 use Filament\Resources\Pages\EditRecord;
 use Illuminate\Database\Eloquent\Model;
@@ -19,6 +20,21 @@ class DecreaseBranchItem extends EditRecord
     }
     protected function mutateFormDataBeforeFill(array $data): array
     {
+        $record = BranchItem::find($data['id']);
+        $item = $record->item;
+        
+        //  app()->getLocale() to get current language.
+        //  static::$title     to get current title and set it.
+        switch(app()->getLocale()){
+            case "en":
+                static::$title = "Dispatch " . $item->name_en;
+                break;
+            case "ar":
+                static::$title = "إخراج " . $item->name;
+                break;
+        }
+
+        
         $data['max'] = $data['quantity'];
         $data['quantity'] = '';
      

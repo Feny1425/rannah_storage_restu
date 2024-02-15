@@ -60,7 +60,7 @@ class BranchMealResource extends Resource
                     ->nullable(false)
                     ->placeholder(__('Added Quantity'))
                     ->label(__('Quantity')),
-                self::getShipmentField($form->getOperation()),
+                //self::getShipmentField($form->getOperation()),
             ]);
     }
 
