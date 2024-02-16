@@ -9,10 +9,25 @@ use App\Models\Stockables\BranchMeal;
 use Filament\Actions;
 use Filament\Resources\Pages\EditRecord;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 class DecreaseBranchMeal extends EditRecord
 {
     protected static string $resource = BranchMealResource::class;
+
+    protected function authorizeAccess(): void
+    {
+        $user = Auth::user();
+        abort_if(!$user->can('decrease BranchMeal'), 403);
+    }
+
+    public function getTitle(): string
+    {
+        return match (app()->getLocale()) {
+            'ar' => 'تقليل ' . $this->getRecord()->meal->name,
+            default => 'Decrease ' . $this->getRecord()->meal->name_en,
+        };
+    }
 
     protected function getHeaderActions(): array
     {
@@ -24,9 +39,6 @@ class DecreaseBranchMeal extends EditRecord
 
     protected function mutateFormDataBeforeFill(array $data): array
     {
-        $record = BranchMeal::find($data['id']);
-        self::editName($record->meal);
-
         $data['max'] = $data['quantity'];
 
         $data['quantity'] = '';
@@ -44,24 +56,5 @@ class DecreaseBranchMeal extends EditRecord
         $data['quantity'] = $record['quantity'] - $data['quantity'];
         $record->update($data);
         return $record;
-    }
-
-    public static ?string $t = "sd";
-
-    public function getTitle(): string
-    {
-        return static::$t;
-    }
-
-    public static function editName(Meal $model): void
-    {
-        switch (app()->getLocale()) {
-            case "en":
-                static::$t = "Decrease " . $model->name_en;
-                break;
-            case "ar":
-                static::$t = "تنقيص " . $model->name;
-                break;
-        }
     }
 }

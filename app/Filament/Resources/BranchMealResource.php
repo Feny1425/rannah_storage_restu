@@ -27,7 +27,11 @@ class BranchMealResource extends Resource
     public static function canViewAny(): bool
     {
         $user = Auth::user();
-        return !($user->hasRole(RoleEnum::SUPER_ADMIN) || ($user->hasRole(RoleEnum::OWNER)));
+        if ($user->hasRole(RoleEnum::SUPER_ADMIN)) return false;
+        if ($user->hasRole(RoleEnum::OWNER)) return false;
+        if ($user->hasPermissionTo('increase BranchMeal')) return true;
+        if ($user->hasPermissionTo('decrease BranchMeal')) return true;
+        return false;
     }
 
     public static function getEloquentQuery(): Builder
@@ -113,13 +117,13 @@ class BranchMealResource extends Resource
                     ->url(fn(BranchMeal $record): string => BranchMealResource::getUrl('increase', ['record' => $record]))
                     ->visible(function () {
                         $user = Auth::user();
-                        return $user->hasRole(RoleEnum::CASHIER) || $user->hasRole(RoleEnum::DISPATCHER);
+                        return $user->hasPermissionTo('increase BranchMeal');
                     }),
                 Tables\Actions\Action::make(__('dispatch'))
                     ->url(fn(BranchMeal $record): string => BranchMealResource::getUrl('decrease', ['record' => $record]))
                     ->visible(function () {
                         $user = Auth::user();
-                        return $user->hasRole(RoleEnum::CASHIER);
+                        return $user->hasPermissionTo('decrease BranchMeal');
                     })
             ])
             ->bulkActions([

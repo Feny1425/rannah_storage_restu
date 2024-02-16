@@ -7,10 +7,19 @@ use App\Models\Stockables\BranchItem;
 use Filament\Actions;
 use Filament\Resources\Pages\EditRecord;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 class EditBranchItem extends EditRecord
 {
+
     protected static string $resource = BranchItemResource::class;
+
+    protected function authorizeAccess(): void
+    {
+        $user = Auth::user();
+        abort_if(!$user->can('increase BranchItem'), 403);
+    }
+
     protected function getHeaderActions(): array
     {
         return [
@@ -18,32 +27,37 @@ class EditBranchItem extends EditRecord
             Actions\DeleteAction::make(),
         ];
     }
+
     protected function mutateFormDataBeforeFill(array $data): array
     {
         $record = BranchItem::find($data['id']);
         $item = $record->item;
         static::editName($item);
         $data['quantity'] = '';
-     
+
         return $data;
     }
+
     protected function handleRecordUpdate(Model $record, array $data): Model
     {
         $data['quantity'] = $data['quantity'] + $record['quantity'];
         $record->update($data);
         $item = $record->item;
         static::editName($item);
-        
+
         return $record;
     }
 
     public static ?string $t = "sd";
+
     public function getTitle(): string
     {
         return static::$t;
     }
-    public static function editName($model){
-        switch(app()->getLocale()){
+
+    public static function editName($model)
+    {
+        switch (app()->getLocale()) {
             case "en":
                 static::$t = "Add " . $model->name_en;
                 break;

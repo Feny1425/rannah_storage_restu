@@ -37,7 +37,11 @@ class BranchItemResource extends Resource
     public static function canViewAny(): bool
     {
         $user = Auth::user();
-        return !($user->hasRole(RoleEnum::SUPER_ADMIN) || ($user->hasRole(RoleEnum::OWNER)));
+        if ($user->hasRole(RoleEnum::SUPER_ADMIN)) return false;
+        if ($user->hasRole(RoleEnum::OWNER)) return false;
+        if ($user->hasPermissionTo('increase BranchItem')) return true;
+        if ($user->hasPermissionTo('decrease BranchItem')) return true;
+        return false;
     }
 
     public static function canView(Model $record): bool
