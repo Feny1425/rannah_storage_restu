@@ -53,6 +53,12 @@ class EditBranchMeal extends EditRecord
     
         return $data;
     }
+
+    /**
+     * @param BranchMeal $record
+     * @param array $data
+     * @return BranchMeal
+     */
     protected function handleRecordUpdate(Model $record, array $data): Model
     {
         //get branch id of meal branch
@@ -85,7 +91,7 @@ class EditBranchMeal extends EditRecord
         }
 
         //edit meal branch quantity
-        $data['quantity'] = $data['quantity'] + $record['quantity'];
+        $data['quantity'] = $data['quantity']  * $meal->batch_size + $record['quantity'];
         $record->update($data);
         return $record;
     }
