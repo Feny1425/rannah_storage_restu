@@ -45,24 +45,28 @@ class BranchMealResource extends Resource
         }
         return $query;
     }
+
     public static function form(Form $form): Form
     {
-        return $form
-            ->schema([
-                Forms\Components\TextInput::make('quantity')
-                    ->autofocus()
-                    ->numeric()
-                    ->inputMode('decimal')
-                    ->maxValue(function (Get $get): int {
-                        $max = $get('max');
-                        return (int)$max;
-                    })
-                    ->minValue(1)
-                    ->nullable(false)
-                    ->placeholder(__('Added Quantity'))
-                    ->label(__('Quantity')),
-                self::getShipmentField($form->getOperation()),
-            ]);
+        $quantityField = Forms\Components\TextInput::make('quantity')
+            ->autofocus()
+            ->numeric()
+            ->inputMode('decimal')
+            ->nullable(false)
+            ->label(__('Quantity'));
+
+        if ($form->getOperation() === 'add') {
+            $quantityField
+                ->placeholder(__('Added Quantity'));
+        } else if ($form->getOperation() === 'decrease') {
+            $quantityField
+                ->placeholder(__('Decreased Quantity'));
+        }
+
+        return $form->schema([
+            $quantityField,
+            self::getShipmentField($form->getOperation())
+        ]);
     }
 
     public static function table(Table $table): Table
@@ -86,7 +90,18 @@ class BranchMealResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\Action::make(__('add'))
+                    ->url(fn(BranchMeal $record): string => BranchMealResource::getUrl('increase', ['record' => $record]))
+                    ->visible(function () {
+                        $user = Auth::user();
+                        return $user->hasRole(RoleEnum::RECEIVER);
+                    }),
+                Tables\Actions\Action::make(__('dispatch'))
+                    ->url(fn(BranchMeal $record): string => BranchMealResource::getUrl('decrease', ['record' => $record]))
+                    ->visible(function () {
+                        $user = Auth::user();
+                        return $user->hasRole(RoleEnum::CASHIER);
+                    })
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -107,26 +122,28 @@ class BranchMealResource extends Resource
         return [
             'index' => Pages\ListBranchMeals::route('/'),
             'create' => Pages\CreateBranchMeal::route('/create'),
-            'edit' => Pages\EditBranchMeal::route('/{record}/edit'),
+            'increase' => Pages\EditBranchMeal::route('/{record}/add'),
+            'decrease' => Pages\DecreaseBranchMeal::route('/{record}/decrease'),
         ];
     }
+
     protected static function getShipmentField(string $operation)
     {
         if ($operation === 'edit') {
             return Forms\Components\TextInput::make('id')->visible(false);
         } else {
             return Forms\Components\TextInput::make('quantity')
-            ->autofocus()
-            ->numeric()
-            ->inputMode('decimal')
-            ->maxValue(function (Get $get): int {
-                $max = $get('max');
-                return (int)$max;
-            })
-            ->minValue(1)
-            ->nullable(false)
-            ->placeholder(__('Added Quantity'))
-            ->label(__('Type')) /*here put close type (sold, spoild, etc...)*/;
+                ->autofocus()
+                ->numeric()
+                ->inputMode('decimal')
+                ->maxValue(function (Get $get): int {
+                    $max = $get('max');
+                    return (int)$max;
+                })
+                ->minValue(1)
+                ->nullable(false)
+                ->placeholder(__('Added Quantity'))
+                ->label(__('Type')) /*here put close type (sold, spoild, etc...)*/ ;
         }
     }
 
