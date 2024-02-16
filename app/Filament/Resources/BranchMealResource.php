@@ -62,7 +62,6 @@ class BranchMealResource extends Resource
                 return (int)$max;
             })
             ->minValue(1)
-            ->placeholder(__('Added Quantity'))
             ->label(__('Quantity'));
 
         $formSchema = [
