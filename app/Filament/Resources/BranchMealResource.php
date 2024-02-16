@@ -53,20 +53,39 @@ class BranchMealResource extends Resource
             ->numeric()
             ->inputMode('decimal')
             ->nullable(false)
+            ->maxValue(function (Get $get): int {
+                $max = $get('max');
+                return (int)$max;
+            })
+            ->minValue(1)
+            ->placeholder(__('Added Quantity'))
             ->label(__('Quantity'));
+
+        $formSchema = [
+            $quantityField
+        ];
 
         if ($form->getOperation() === 'add') {
             $quantityField
                 ->placeholder(__('Added Quantity'));
-        } else if ($form->getOperation() === 'decrease') {
+        } //
+        else if ($form->getOperation() === 'decrease') {
             $quantityField
                 ->placeholder(__('Decreased Quantity'));
+
+            $formSchema[] = Forms\Components\Select::make('type')
+                ->options([
+                    'sold' => __('Sold'),
+                    'spoiled' => __('Spoiled'),
+                    'staff_meals' => __('Staff Meals'), // or 'workers_meals' for إعاشة عمال
+                    'meal_provision' => __('Meal Provision'), // for إعاشة
+                    'donation' => __('Donation'),
+                ])
+                ->label(__('Type'))
+                ->nullable(false);
         }
 
-        return $form->schema([
-            $quantityField,
-            self::getShipmentField($form->getOperation())
-        ]);
+        return $form->schema($formSchema);
     }
 
     public static function table(Table $table): Table
@@ -94,7 +113,7 @@ class BranchMealResource extends Resource
                     ->url(fn(BranchMeal $record): string => BranchMealResource::getUrl('increase', ['record' => $record]))
                     ->visible(function () {
                         $user = Auth::user();
-                        return $user->hasRole(RoleEnum::RECEIVER);
+                        return $user->hasRole(RoleEnum::CASHIER) || $user->hasRole(RoleEnum::DISPATCHER);
                     }),
                 Tables\Actions\Action::make(__('dispatch'))
                     ->url(fn(BranchMeal $record): string => BranchMealResource::getUrl('decrease', ['record' => $record]))
@@ -125,26 +144,6 @@ class BranchMealResource extends Resource
             'increase' => Pages\EditBranchMeal::route('/{record}/add'),
             'decrease' => Pages\DecreaseBranchMeal::route('/{record}/decrease'),
         ];
-    }
-
-    protected static function getShipmentField(string $operation)
-    {
-        if ($operation === 'edit') {
-            return Forms\Components\TextInput::make('id')->visible(false);
-        } else {
-            return Forms\Components\TextInput::make('quantity')
-                ->autofocus()
-                ->numeric()
-                ->inputMode('decimal')
-                ->maxValue(function (Get $get): int {
-                    $max = $get('max');
-                    return (int)$max;
-                })
-                ->minValue(1)
-                ->nullable(false)
-                ->placeholder(__('Added Quantity'))
-                ->label(__('Type')) /*here put close type (sold, spoild, etc...)*/ ;
-        }
     }
 
     public static function getPluralLabel(): string
