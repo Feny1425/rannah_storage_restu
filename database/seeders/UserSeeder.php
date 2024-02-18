@@ -45,12 +45,21 @@ class UserSeeder extends Seeder
 
         // permissions - https://github.com/Althinect/filament-spatie-roles-permissions
         Artisan::call('permissions:sync -COPY');
-        Permission::insert([
-            [
-                'name' => 'view reports',
+
+        $newPermissions = [
+            'view reports',
+            'increase BranchItem',
+            'decrease BranchItem',
+            'increase BranchMeal',
+            'decrease BranchMeal',
+        ];
+        for ($i = 0; $i < count($newPermissions); $i++) {
+            $newPermissions[$i] = [
+                'name' => $newPermissions[$i],
                 'guard_name' => 'web',
-            ]
-        ]);
+            ];
+        }
+        Permission::insert($newPermissions);
 
         // users
         $admin = User::create([
@@ -68,7 +77,12 @@ class UserSeeder extends Seeder
             'email' => 'receiver@eny.sa',
             'password' => bcrypt('1'),
         ]);
-        $casheirUser = User::create([
+        $dispatcherUser = User::create([
+            'name' => 'Dispatcher',
+            'email' => 'dispatcher@eny.sa',
+            'password' => bcrypt('1'),
+        ]);
+        $cashierUser = User::create([
             'name' => 'Casheir',
             'email' => 'casheir@eny.sa',
             'password' => bcrypt('1'),
@@ -85,19 +99,20 @@ class UserSeeder extends Seeder
             ->givePermissionTo('update User');
 
         $receiverRole
-            ->givePermissionTo('update BranchItem');
+            ->givePermissionTo('increase BranchItem');
 
         $dispatcherRole
-            ->givePermissionTo('update BranchItem')
-            ->givePermissionTo('update BranchMeal');
+            ->givePermissionTo('decrease BranchItem')
+            ->givePermissionTo('increase BranchMeal');
 
         $cashierRole
-            ->givePermissionTo('update BranchMeal');
-            
+            ->givePermissionTo('decrease BranchMeal');
+
         // assign roles to users
         $admin->assignRole($superAdminRole);
         $systemUser->assignRole($systemRole);
         $receiverUser->assignRole($receiverRole);
-        $casheirUser->assignRole($cashierRole);
+        $dispatcherUser->assignRole($dispatcherRole);
+        $cashierUser->assignRole($cashierRole);
     }
 }

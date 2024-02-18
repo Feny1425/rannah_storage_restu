@@ -8,10 +8,18 @@ use App\Models\Stockables\BranchMeal;
 use Filament\Actions;
 use Filament\Resources\Pages\EditRecord;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 class EditBranchMeal extends EditRecord
 {
     protected static string $resource = BranchMealResource::class;
+
+    protected function authorizeAccess(): void
+    {
+        $user = Auth::user();
+        abort_if(!$user->can('increase BranchMeal'), 403);
+    }
+
     protected function getHeaderActions(): array
     {
         return [
@@ -19,6 +27,7 @@ class EditBranchMeal extends EditRecord
             Actions\DeleteAction::make(),
         ];
     }
+
     protected function mutateFormDataBeforeFill(array $data): array
     {
         $record = BranchMeal::find($data['id']);
@@ -30,17 +39,16 @@ class EditBranchMeal extends EditRecord
         static::editName($meal);
 
 
-
         $meal_items = $meal->meal_items;
         $max = 99999999999;
-        foreach ($meal_items as $meal_item){
+        foreach ($meal_items as $meal_item) {
             $item = $meal_item->item;
             $branch_items = $item->branchItem;
-            foreach($branch_items as $branch_item){
-                if($branch_item->branch_id == $branch_id){
-                    $c = $branch_item->quantity/$meal_item->quantity;
-                    
-                    if($max > $c){
+            foreach ($branch_items as $branch_item) {
+                if ($branch_item->branch_id == $branch_id) {
+                    $c = $branch_item->quantity / $meal_item->quantity;
+
+                    if ($max > $c) {
                         $max = $c;
                     }
                     break;
@@ -50,9 +58,15 @@ class EditBranchMeal extends EditRecord
 
         $data['max'] = $max;
         $data['quantity'] = '';
-    
+
         return $data;
     }
+
+    /**
+     * @param BranchMeal $record
+     * @param array $data
+     * @return BranchMeal
+     */
     protected function handleRecordUpdate(Model $record, array $data): Model
     {
         //get branch id of meal branch
@@ -62,19 +76,19 @@ class EditBranchMeal extends EditRecord
         static::editName($meal);
         //get all meal items that belongs to the meal
         $meal_items = $meal->meal_items;
-        
+
         //for each meal item
-        foreach ($meal_items as $meal_item){
+        foreach ($meal_items as $meal_item) {
             //get item of meal item
             $item = $meal_item->item;
             // get all branch items belong to this item
             $branch_items = $item->branchItem;
 
             //for each branch item
-            foreach($branch_items as $branch_item){
+            foreach ($branch_items as $branch_item) {
 
                 //check if this branch item belongs to the meal-branch branch 
-                if($branch_item->branch_id == $branch_id){
+                if ($branch_item->branch_id == $branch_id) {
 
                     //edit item branch quantity
                     $quantity = $branch_item->quantity - ($meal_item->quantity * $data['quantity']);
@@ -85,18 +99,21 @@ class EditBranchMeal extends EditRecord
         }
 
         //edit meal branch quantity
-        $data['quantity'] = $data['quantity'] + $record['quantity'];
+        $data['quantity'] = $data['quantity'] * $meal->batch_size + $record['quantity'];
         $record->update($data);
         return $record;
     }
+
     public static ?string $t = "sd";
+
     public function getTitle(): string
     {
         return static::$t;
     }
 
-    public static function editName($model){
-        switch(app()->getLocale()){
+    public static function editName($model)
+    {
+        switch (app()->getLocale()) {
             case "en":
                 static::$t = "Cook " . $model->name_en;
                 break;

@@ -27,7 +27,11 @@ class BranchMealResource extends Resource
     public static function canViewAny(): bool
     {
         $user = Auth::user();
-        return !($user->hasRole(RoleEnum::SUPER_ADMIN) || ($user->hasRole(RoleEnum::OWNER)));
+        if ($user->hasRole(RoleEnum::SUPER_ADMIN)) return false;
+        if ($user->hasRole(RoleEnum::OWNER)) return false;
+        if ($user->hasPermissionTo('increase BranchMeal')) return true;
+        if ($user->hasPermissionTo('decrease BranchMeal')) return true;
+        return false;
     }
 
     public static function getEloquentQuery(): Builder
@@ -45,24 +49,46 @@ class BranchMealResource extends Resource
         }
         return $query;
     }
+
     public static function form(Form $form): Form
     {
-        return $form
-            ->schema([
-                Forms\Components\TextInput::make('quantity')
-                    ->autofocus()
-                    ->numeric()
-                    ->inputMode('decimal')
-                    ->maxValue(function (Get $get): int {
-                        $max = $get('max');
-                        return (int)$max;
-                    })
-                    ->minValue(1)
-                    ->nullable(false)
-                    ->placeholder(__('Added Quantity'))
-                    ->label(__('Quantity')),
-                self::getShipmentField($form->getOperation()),
-            ]);
+        $quantityField = Forms\Components\TextInput::make('quantity')
+            ->autofocus()
+            ->numeric()
+            ->inputMode('decimal')
+            ->nullable(false)
+            ->maxValue(function (Get $get): int {
+                $max = $get('max');
+                return (int)$max;
+            })
+            ->minValue(1)
+            ->label(__('Quantity'));
+
+        $formSchema = [
+            $quantityField
+        ];
+
+        if ($form->getOperation() === 'add') {
+            $quantityField
+                ->placeholder(__('Added Quantity'));
+        } //
+        else if ($form->getOperation() === 'decrease') {
+            $quantityField
+                ->placeholder(__('Decreased Quantity'));
+
+            $formSchema[] = Forms\Components\Select::make('type')
+                ->options([
+                    'sold' => __('Sold'),
+                    'spoiled' => __('Spoiled'),
+                    'staff_meals' => __('Staff Meals'), // or 'workers_meals' for إعاشة عمال
+                    'meal_provision' => __('Meal Provision'), // for إعاشة
+                    'donation' => __('Donation'),
+                ])
+                ->label(__('Type'))
+                ->nullable(false);
+        }
+
+        return $form->schema($formSchema);
     }
 
     public static function table(Table $table): Table
@@ -86,7 +112,18 @@ class BranchMealResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\Action::make(__('add'))
+                    ->url(fn(BranchMeal $record): string => BranchMealResource::getUrl('increase', ['record' => $record]))
+                    ->visible(function () {
+                        $user = Auth::user();
+                        return $user->hasPermissionTo('increase BranchMeal');
+                    }),
+                Tables\Actions\Action::make(__('dispatch'))
+                    ->url(fn(BranchMeal $record): string => BranchMealResource::getUrl('decrease', ['record' => $record]))
+                    ->visible(function () {
+                        $user = Auth::user();
+                        return $user->hasPermissionTo('decrease BranchMeal');
+                    })
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -107,27 +144,9 @@ class BranchMealResource extends Resource
         return [
             'index' => Pages\ListBranchMeals::route('/'),
             'create' => Pages\CreateBranchMeal::route('/create'),
-            'edit' => Pages\EditBranchMeal::route('/{record}/edit'),
+            'increase' => Pages\EditBranchMeal::route('/{record}/add'),
+            'decrease' => Pages\DecreaseBranchMeal::route('/{record}/decrease'),
         ];
-    }
-    protected static function getShipmentField(string $operation)
-    {
-        if ($operation === 'edit') {
-            return Forms\Components\TextInput::make('id')->visible(false);
-        } else {
-            return Forms\Components\TextInput::make('quantity')
-            ->autofocus()
-            ->numeric()
-            ->inputMode('decimal')
-            ->maxValue(function (Get $get): int {
-                $max = $get('max');
-                return (int)$max;
-            })
-            ->minValue(1)
-            ->nullable(false)
-            ->placeholder(__('Added Quantity'))
-            ->label(__('Type')) /*here put close type (sold, spoild, etc...)*/;
-        }
     }
 
     public static function getPluralLabel(): string
