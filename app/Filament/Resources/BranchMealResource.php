@@ -77,13 +77,7 @@ class BranchMealResource extends Resource
                 ->placeholder(__('Decreased Quantity'));
 
             $formSchema[] = Forms\Components\Select::make('type')
-                ->options([
-                    'sold' => __('Sold'),
-                    'spoiled' => __('Spoiled'),
-                    'staff_meals' => __('Staff Meals'), // or 'workers_meals' for إعاشة عمال
-                    'meal_provision' => __('Meal Provision'), // for إعاشة
-                    'donation' => __('Donation'),
-                ])
+                ->options(App\Enums\CloseTypeEnum::class)
                 ->label(__('Type'))
                 ->nullable(false);
         }
