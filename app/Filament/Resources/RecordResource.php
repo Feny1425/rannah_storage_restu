@@ -28,6 +28,9 @@ class RecordResource extends Resource
     {
         return $table
             ->columns([
+                Tables\Columns\TextColumn::make('id')
+                    ->label(__('ID'))
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('user.name')
                     ->label(__('User Name'))
                     ->searchable()
@@ -51,14 +54,24 @@ class RecordResource extends Resource
                 Tables\Columns\TextColumn::make('stockable_quantity')
                     ->label(__('Quantity'))
                     ->sortable(),
+                Tables\Columns\TextColumn::make('stockable_old_quantity')
+                    ->label(__('Old Quantity'))
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('stockable_new_quantity')
+                    ->label(__('New Quantity'))
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->label(__('Created At'))
                     ->sortable(),
                 Tables\Columns\TextColumn::make('details')
                     ->label(__('Details'))
                     ->state(function (Record $record) {
-                        if ($record->recordable_type == MealDecreasedRecord::class) {
-                            return CloseTypeEnum::fromValue($record->recordable->type)->getLabel();
+                        switch ($record->recordable_type) {
+                            case MealDecreasedRecord::class:
+                                return CloseTypeEnum::fromValue($record->recordable->type)->getLabel();
+
+                            case Record::class:
+                                return $record->recordable->id;
                         }
                     })
             ])
