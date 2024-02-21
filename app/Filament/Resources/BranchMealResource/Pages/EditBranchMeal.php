@@ -93,6 +93,7 @@ class EditBranchMeal extends EditRecord
                     //edit item branch quantity
                     $quantity = $branch_item->quantity - ($meal_item->quantity * $data['quantity']);
                     $branch_item->update(['quantity' => $quantity]);
+                    // $branch_item->updateQuietly(['quantity' => $quantity]); // This will make it possible to manually create records instead of using the model's create method.
                     break;
                 }
             }

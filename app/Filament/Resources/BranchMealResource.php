@@ -27,7 +27,7 @@ class BranchMealResource extends Resource
     public static function canViewAny(): bool
     {
         $user = Auth::user();
-        if ($user->hasRole(RoleEnum::SUPER_ADMIN)) return false;
+        if ($user->hasRole(RoleEnum::SUPER_ADMIN)) return true; // TODO: make it false
         if ($user->hasRole(RoleEnum::OWNER)) return false;
         if ($user->hasPermissionTo('increase BranchMeal')) return true;
         if ($user->hasPermissionTo('decrease BranchMeal')) return true;

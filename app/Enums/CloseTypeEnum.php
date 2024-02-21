@@ -28,11 +28,9 @@ enum CloseTypeEnum: string implements HasLabel, HasColor, HasIcon
     public function getColor(): string|array|null
     {
         return match ($this) {
-            self::SOLD => 'success',
+            self::SOLD, self::DONATION, self::MEAL_PROVISION => 'success',
             self::SPOILED => 'danger',
             self::STAFF_MEAL => 'orange',
-            self::MEAL_PROVISION => 'success',
-            self::DONATION => 'success',
         };
     }
 
@@ -44,6 +42,18 @@ enum CloseTypeEnum: string implements HasLabel, HasColor, HasIcon
             self::STAFF_MEAL => 'heroicon-m-cake',
             self::MEAL_PROVISION => 'heroicon-m-building-office',
             self::DONATION => 'heroicon-m-heart',
+        };
+    }
+
+    public static function fromValue(string $value): CloseTypeEnum
+    {
+        return match ($value) {
+            'sold' => self::SOLD,
+            'spoiled' => self::SPOILED,
+            'staff_meals' => self::STAFF_MEAL,
+            'meal_provision' => self::MEAL_PROVISION,
+            'donation' => self::DONATION,
+            default => throw new \InvalidArgumentException("Unknown value: $value"),
         };
     }
 }

@@ -2,8 +2,10 @@
 
 namespace App\Filament\Resources;
 
+use App\Enums\CloseTypeEnum;
 use App\Filament\Resources\RecordResource\Pages;
 use App\Filament\Resources\RecordResource\RelationManagers;
+use App\Models\Recordables\MealDecreasedRecord;
 use App\Models\Recordables\Record;
 use App\Models\Stockables\BranchItem;
 use App\Models\Stockables\BranchMeal;
@@ -48,12 +50,17 @@ class RecordResource extends Resource
                     ->sortable(),
                 Tables\Columns\TextColumn::make('stockable_quantity')
                     ->label(__('Quantity'))
-                    ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->label(__('Created At'))
-                    ->searchable()
                     ->sortable(),
+                Tables\Columns\TextColumn::make('details')
+                    ->label(__('Details'))
+                    ->state(function (Record $record) {
+                        if ($record->recordable_type == MealDecreasedRecord::class) {
+                            return CloseTypeEnum::fromValue($record->recordable->type)->getLabel();
+                        }
+                    })
             ])
             ->defaultSort('created_at', 'desc')
             ->filters([

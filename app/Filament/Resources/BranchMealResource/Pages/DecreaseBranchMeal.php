@@ -4,8 +4,11 @@ namespace App\Filament\Resources\BranchMealResource\Pages;
 
 use App\Filament\Resources\BranchMealResource;
 use App\Models\Meal;
+use App\Models\Recordables\MealDecreasedRecord;
+use App\Models\Recordables\Record;
 use App\Models\Stockables\BranchItem;
 use App\Models\Stockables\BranchMeal;
+use App\Models\User;
 use Filament\Actions;
 use Filament\Resources\Pages\EditRecord;
 use Illuminate\Database\Eloquent\Model;
@@ -23,6 +26,7 @@ class DecreaseBranchMeal extends EditRecord
 
     public function getTitle(): string
     {
+        // TODO: refactor to using translation __('') instead of match
         return match (app()->getLocale()) {
             'ar' => 'تقليل ' . $this->getRecord()->meal->name,
             default => 'Decrease ' . $this->getRecord()->meal->name_en,
@@ -71,9 +75,31 @@ class DecreaseBranchMeal extends EditRecord
      */
     protected function handleRecordUpdate(Model $record, array $data): Model
     {
-        // edit meal branch quantity
-        $data['quantity'] = $record['quantity'] - $data['quantity'];
-        $record->update($data);
-        return $record;
+        // just for readability, the record is a BranchMeal that is being edited
+        $branchMeal = $record;
+
+        $record = Record::create([
+            'user_id' => Auth::id(),
+            'branch_id' => $branchMeal->branch_id,
+            'stockable_quantity' => $data['quantity'],
+            'stockable_old_quantity' => $branchMeal['quantity'],
+        ]);
+        $mealDecreasedRecord = MealDecreasedRecord::create([
+            'record_id' => $record->id,
+            'type' => $data['type'],
+        ]);
+        $data['quantity'] = $branchMeal['quantity'] - $data['quantity'];
+
+        $record->recordable()->associate($mealDecreasedRecord);
+        $record->stockable_new_quantity = $data['quantity'];
+        $record->stockable()->associate($branchMeal);
+        $record->save();
+
+        // remove 'type' from the data array
+        unset($data['type']);
+
+        $branchMeal->updateQuietly($data);
+
+        return $branchMeal;
     }
 }
